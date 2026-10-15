@@ -223,17 +223,7 @@ function buildScene02() {
 
   // Try loading royal.jpg first, then fallback to chachus-royal.jpg
   let triedAlt = false;
-  img.src = "assets/images/royal.jpg";
-  img.onerror = () => {
-    if (!triedAlt) {
-      triedAlt = true;
-      img.src = "assets/images/chachus-royal.jpg";
-    } else {
-      img.style.display = "none";
-      placeholder.style.display = "flex";
-    }
-  };
-  img.onload = () => {
+  const onRoyalLoad = () => {
     if (img.naturalWidth > 10) {
       img.style.display = "block";
       placeholder.style.display = "none";
@@ -242,6 +232,23 @@ function buildScene02() {
       placeholder.style.display = "flex";
     }
   };
+  const onRoyalError = () => {
+    if (!triedAlt) {
+      triedAlt = true;
+      img.src = "assets/images/chachus-royal.jpg";
+    } else {
+      img.style.display = "none";
+      placeholder.style.display = "flex";
+    }
+  };
+
+  img.onload = onRoyalLoad;
+  img.onerror = onRoyalError;
+  img.src = "assets/images/royal.jpg";
+
+  if (img.complete && img.naturalWidth > 10) {
+    onRoyalLoad();
+  }
 
   const subtitle = el("p", "subtitle beat", "Standing together with pride, warmth, and an enduring bond.");
   subtitle.style.setProperty("--delay", "0.75s");
@@ -367,15 +374,7 @@ function buildScene04() {
     const hintEl = placeholder.querySelector(".photo-placeholder-hint");
     if (hintEl) hintEl.textContent = `Place photograph into ${mem.image}`;
 
-    img.src = mem.image;
-    modalImg.src = mem.image;
-
-    img.onerror = () => {
-      img.style.display = "none";
-      placeholder.style.display = "flex";
-      modalImg.style.display = "none";
-    };
-    img.onload = () => {
+    const onMemLoad = () => {
       if (img.naturalWidth > 10) {
         img.style.display = "block";
         placeholder.style.display = "none";
@@ -386,6 +385,30 @@ function buildScene04() {
         modalImg.style.display = "none";
       }
     };
+
+    const onMemError = () => {
+      // Fallback: check assets/images/ directly if not found in assets/images/memories/
+      const altSrc = mem.image.replace("assets/images/memories/", "assets/images/");
+      if (img.src !== altSrc && !img.dataset.triedFallback) {
+        img.dataset.triedFallback = "true";
+        img.src = altSrc;
+        modalImg.src = altSrc;
+      } else {
+        img.style.display = "none";
+        placeholder.style.display = "flex";
+        modalImg.style.display = "none";
+      }
+    };
+
+    img.dataset.triedFallback = "";
+    img.onload = onMemLoad;
+    img.onerror = onMemError;
+    img.src = mem.image;
+    modalImg.src = mem.image;
+
+    if (img.complete && img.naturalWidth > 10) {
+      onMemLoad();
+    }
   }
 
   prevBtn.addEventListener("click", (e) => {
@@ -598,17 +621,7 @@ function buildSceneFamilyCollage() {
 
   // Try loading primary image (final.jpg) then fallback (final-image.jpg)
   let triedAlt = false;
-  img.src = data.image || "assets/images/final.jpg";
-  img.onerror = () => {
-    if (!triedAlt && data.altImage) {
-      triedAlt = true;
-      img.src = data.altImage;
-    } else {
-      img.style.display = "none";
-      placeholder.style.display = "flex";
-    }
-  };
-  img.onload = () => {
+  const onCollageLoad = () => {
     if (img.naturalWidth > 10) {
       img.style.display = "block";
       placeholder.style.display = "none";
@@ -617,6 +630,24 @@ function buildSceneFamilyCollage() {
       placeholder.style.display = "flex";
     }
   };
+
+  const onCollageError = () => {
+    if (!triedAlt && data.altImage) {
+      triedAlt = true;
+      img.src = data.altImage;
+    } else {
+      img.style.display = "none";
+      placeholder.style.display = "flex";
+    }
+  };
+
+  img.onload = onCollageLoad;
+  img.onerror = onCollageError;
+  img.src = data.image || "assets/images/final.jpg";
+
+  if (img.complete && img.naturalWidth > 10) {
+    onCollageLoad();
+  }
 
   stage.append(noteBox, frame);
 
