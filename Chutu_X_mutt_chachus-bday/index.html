@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#03050a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="A cinematic experience for Chuttu Chachu & Muttu Chachu.">
+  <title>For Chuttu Chachu & Muttu Chachu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Zero-dependency instant preloader styles for frame-1 render before any network fetch -->
+  <style id="exp-preloader-css">
+    #experience-preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #03050a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: max(20px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom)) 24px;
+      color: #f4eee3;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      transition: opacity 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.75s ease;
+      will-change: opacity, transform;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #experience-preloader.fade-out {
+      opacity: 0;
+      transform: scale(1.05);
+      filter: blur(12px);
+      pointer-events: none;
+    }
+
+    .exp-ambient-light {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(216, 179, 106, 0.16) 0%, rgba(17, 26, 43, 0.45) 50%, transparent 72%);
+      filter: blur(40px);
+      pointer-events: none;
+      animation: expPulse 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes expPulse {
+      0% { transform: scale(0.9); opacity: 0.5; }
+      100% { transform: scale(1.2); opacity: 0.95; }
+    }
+
+    .exp-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .exp-celestial-orb {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+
+    .orb-ring-outer {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(216, 179, 106, 0.38);
+      animation: orbRotate 12s linear infinite;
+    }
+
+    .orb-ring-inner {
+      position: absolute;
+      inset: 7px;
+      border-radius: 50%;
+      border: 1px solid rgba(241, 217, 155, 0.55);
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      animation: orbRotateRev 5s linear infinite;
+    }
+
+    .orb-core {
+      font-size: 24px;
+      color: #f1d99b;
+      text-shadow: 0 0 16px rgba(216, 179, 106, 0.85);
+      animation: orbGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes orbRotate {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes orbRotateRev {
+      to { transform: rotate(-360deg); }
+    }
+    @keyframes orbGlow {
+      0% { transform: scale(0.92); opacity: 0.8; }
+      100% { transform: scale(1.12); opacity: 1; }
+    }
+
+    .exp-eyebrow {
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: #d8b36a;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+
+    .exp-title {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(20px, 5.5vw, 25px);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: #f4eee3;
+      margin-bottom: 22px;
+      line-height: 1.3;
+    }
+
+    .exp-progress-container {
+      width: 100%;
+      height: 3.5px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 99px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+      margin-bottom: 12px;
+    }
+
+    .exp-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #d8b36a, #f1d99b);
+      border-radius: 99px;
+      box-shadow: 0 0 12px rgba(216, 179, 106, 0.7);
+      transition: width 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .exp-status-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 11px;
+      color: #9ea4b1;
+      letter-spacing: 0.03em;
+    }
+
+    .exp-status-text {
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 80%;
+    }
+
+    .exp-status-pct {
+      color: #d8b36a;
+      font-weight: 600;
+      min-width: 38px;
+      text-align: right;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/atmosphere.css">
+  <link rel="stylesheet" href="css/scenes.css">
+  <link rel="stylesheet" href="css/memories.css">
+  <link rel="stylesheet" href="css/celebration.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Instant Preloader: Shows immediately on frame 1 while browser fetches fonts, styles, scripts, and media -->
+  <div id="experience-preloader" class="exp-preloader" role="status" aria-live="polite">
+    <div class="exp-ambient-light" aria-hidden="true"></div>
+    <div class="exp-content">
+      <div class="exp-celestial-orb" aria-hidden="true">
+        <div class="orb-ring-outer"></div>
+        <div class="orb-ring-inner"></div>
+        <div class="orb-core">✨</div>
+      </div>
+      <div class="exp-eyebrow">PREPARING THE EXPERIENCE</div>
+      <h1 class="exp-title">Weaving moments together…</h1>
+      <div class="exp-progress-container">
+        <div id="exp-progress-bar" class="exp-progress-bar"></div>
+      </div>
+      <div class="exp-status-row">
+        <span id="exp-status-text" class="exp-status-text">Gathering memories & melodies…</span>
+        <span id="exp-status-pct" class="exp-status-pct">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="stars" class="stars" aria-hidden="true"></div>
+  <div class="ambient-haze" aria-hidden="true"></div>
+  <div id="particles" class="particles-container" aria-hidden="true"></div>
+  <div id="grain" class="grain" aria-hidden="true"></div>
+
+  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Toggle Sound" title="Sound: Click to toggle">
+    <span id="audio-icon">♪</span>
+  </button>
+
+  <div id="app" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

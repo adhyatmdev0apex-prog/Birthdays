@@ -1,0 +1,285 @@
+/* Responsive & Mobile-First Optimization (Target: 390x844, 360x800, 412x915 & Desktop) */
+
+/* Mobile Devices (<= 600px) */
+@media (max-width: 600px) {
+  .scene {
+    padding: max(18px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom)) 16px;
+  }
+
+  .scene-inner {
+    width: 100%;
+    max-width: 370px;
+  }
+
+  .eyebrow {
+    margin-bottom: 14px;
+    letter-spacing: 0.22em;
+    font-size: 10.5px;
+  }
+
+  .title {
+    font-size: clamp(30px, 9vw, 48px);
+    line-height: 1.1;
+  }
+
+  .title.huge {
+    font-size: clamp(48px, 15vw, 76px);
+  }
+
+  .subtitle {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin-top: 12px;
+  }
+
+  /* Scene 01: The Day */
+  .stagger-line {
+    font-size: clamp(18px, 5.2vw, 26px);
+    line-height: 1.4;
+  }
+
+  /* Scene 02: Preparation */
+  .floating-elements {
+    height: 75px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .ambient-item {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .ambient-item span {
+    font-size: 16px;
+  }
+
+  /* Scene 03: Clues */
+  .clue-stage {
+    min-height: 160px;
+    width: 100%;
+    margin: 6px auto 10px;
+  }
+
+  .clue-card {
+    width: 62px;
+    height: 62px;
+    border-radius: 16px;
+  }
+
+  .clue-icon {
+    font-size: 22px;
+  }
+
+  .clue-label {
+    font-size: 8px;
+  }
+
+  .clue-pos-1 { top: 6%; left: 8%; }
+  .clue-pos-2 { top: 2%; right: 8%; }
+  .clue-pos-3 { bottom: 6%; left: 14%; }
+  .clue-pos-4 { bottom: 2%; right: 12%; }
+
+  /* Scene 05: Messages */
+  .message-stage {
+    min-height: 155px;
+    width: 100%;
+    margin: 10px auto 4px;
+  }
+
+  .message-card {
+    padding: 18px 18px;
+  }
+
+  .message-quote {
+    font-size: 15.5px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .message-dots {
+    margin-top: 10px;
+  }
+
+  /* Scene 06: Memory Album */
+  .photo-frame {
+    width: min(80vw, 290px);
+    padding: 10px 10px 38px 10px;
+  }
+
+  .photo-caption-lip {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    font-size: 13px;
+  }
+
+  .memory-controls {
+    margin-top: 14px;
+    gap: 14px;
+  }
+
+  /* Scene 07: Constellation */
+  .constellation-wrapper {
+    height: 150px;
+    width: 100%;
+    margin: 6px auto 10px;
+  }
+
+  .mini-photo {
+    width: 78px;
+    height: 98px;
+  }
+
+  /* Dedicated Family Collage Scene */
+  .collage-stage {
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .collage-note-box {
+    padding: 10px 14px;
+  }
+
+  .letter-banner {
+    gap: 3px;
+    margin-top: 8px;
+  }
+
+  .letter-badge {
+    width: 17px;
+    height: 22px;
+    font-size: 10px;
+    border-radius: 3px;
+  }
+
+  .letter-badge.space {
+    width: 6px;
+  }
+
+  .collage-photo-frame {
+    width: min(88vw, 330px);
+    aspect-ratio: 16 / 11;
+    padding: 8px 8px 28px 8px;
+  }
+
+  /* Scene 08: Gift */
+  .gift-container {
+    transform: scale(0.88);
+  }
+
+  .gift-container:hover, .gift-container:active {
+    transform: scale(0.88);
+  }
+
+  /* Scene 09: Cake */
+  .cake-wrapper {
+    transform: scale(0.82);
+    margin: 6px auto 4px;
+  }
+
+  .action-tap {
+    margin-top: 16px;
+    padding: 11px 22px;
+    font-size: 12px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  .action-tap:active {
+    transform: scale(0.96);
+  }
+
+  .clue-card:active {
+    transform: scale(0.92);
+  }
+}
+
+/* Landscape Phone */
+@media (orientation: landscape) and (max-height: 520px) {
+  .scene {
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  .scene-inner {
+    transform: scale(0.78);
+    transform-origin: center;
+  }
+
+  .title {
+    font-size: clamp(26px, 5.5vw, 38px);
+  }
+
+  .title.huge {
+    font-size: clamp(36px, 7.5vw, 50px);
+  }
+
+  .floating-elements, .clue-stage, .constellation-wrapper {
+    height: 100px;
+  }
+
+  .memory-stage {
+    transform: scale(0.72);
+  }
+}
+
+/* Desktop Cinematic Scaling (>= 1024px) */
+@media (min-width: 1024px) {
+  .scene-inner {
+    max-width: 860px;
+  }
+
+  .title {
+    font-size: clamp(48px, 6.2vw, 84px);
+  }
+
+  .title.huge {
+    font-size: clamp(76px, 11vw, 136px);
+  }
+
+  .clue-stage {
+    min-height: 240px;
+    max-width: 540px;
+  }
+
+  .clue-card {
+    width: 82px;
+    height: 82px;
+  }
+
+  .clue-icon {
+    font-size: 30px;
+  }
+
+  .clue-pos-1 { top: 10%; left: 10%; }
+  .clue-pos-2 { top: 6%; right: 12%; }
+  .clue-pos-3 { bottom: 12%; left: 16%; }
+  .clue-pos-4 { bottom: 8%; right: 14%; }
+
+  .photo-frame {
+    width: 350px;
+    padding: 14px 14px 48px 14px;
+  }
+
+  .constellation-wrapper {
+    height: 240px;
+    max-width: 580px;
+  }
+
+  .mini-photo {
+    width: 115px;
+    height: 145px;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

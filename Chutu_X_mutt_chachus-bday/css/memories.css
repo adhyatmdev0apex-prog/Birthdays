@@ -1,0 +1,552 @@
+/* Scene 06: The Memory Album (Physical Floating Photograph) */
+
+.memory-stage {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin: 15px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1200px;
+}
+
+.photo-frame {
+  position: relative;
+  width: min(85vw, 360px);
+  aspect-ratio: 4 / 5;
+  background: #fdfbf7; /* Matte fine paper white */
+  padding: 14px 14px 48px 14px;
+  border-radius: 4px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75), 0 5px 20px rgba(216, 179, 106, 0.12);
+  transform: rotate(-1.5deg) translateZ(0);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  animation: photoLevitate 6s ease-in-out infinite alternate;
+}
+
+.photo-frame:hover {
+  transform: rotate(0deg) translateY(-4px) scale(1.02);
+  box-shadow: 0 35px 85px rgba(0, 0, 0, 0.85), 0 8px 30px rgba(216, 179, 106, 0.22);
+}
+
+.photo-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #0f1422;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.photo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.photo-frame:hover .photo-image {
+  transform: scale(1.04);
+}
+
+/* Fallback elegant cinematic placeholder */
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at 50% 40%, #17223b 0%, #0c1220 100%);
+  text-align: center;
+  color: var(--cream);
+}
+
+.photo-placeholder-icon {
+  font-size: 36px;
+  margin-bottom: 14px;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 10px rgba(216, 179, 106, 0.3));
+}
+
+.photo-placeholder-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--light-gold);
+  margin-bottom: 8px;
+}
+
+.photo-placeholder-hint {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 240px;
+}
+
+/* Handwritten title on polaroid lip */
+.photo-caption-lip {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c2925;
+  letter-spacing: -0.01em;
+}
+
+.photo-caption-hint {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888075;
+}
+
+/* Memory Navigation Controls */
+.memory-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.nav-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(216, 179, 106, 0.25);
+  background: rgba(17, 26, 43, 0.7);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.nav-arrow:hover, .nav-arrow:active {
+  background: rgba(216, 179, 106, 0.18);
+  border-color: var(--light-gold);
+  color: var(--light-gold);
+  transform: scale(1.08);
+}
+
+.memory-counter {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--warm-gold);
+}
+
+/* Fullscreen expanded modal */
+.expanded-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(3, 5, 10, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.expanded-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.expanded-content {
+  max-width: 520px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.expanded-image-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 55vh;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(216, 179, 106, 0.3);
+  margin-bottom: 22px;
+}
+
+.expanded-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.expanded-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 5.5vw, 32px);
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+
+.expanded-caption {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 440px;
+}
+
+.close-expanded {
+  position: absolute;
+  top: max(24px, env(safe-area-inset-top));
+  right: max(24px, env(safe-area-inset-right));
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-expanded:hover {
+  border-color: var(--light-gold);
+  color: var(--light-gold);
+}
+
+@keyframes photoLevitate {
+  0% { transform: rotate(-1.5deg) translateY(0); }
+  100% { transform: rotate(-0.5deg) translateY(-8px); }
+}
+
+/* Scene: Dedicated Family Collage ("Our Secret Message") */
+.collage-stage {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: 10px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.collage-note-box {
+  width: 100%;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, rgba(23, 33, 52, 0.88) 0%, rgba(13, 19, 32, 0.96) 100%);
+  border: 1px solid rgba(216, 179, 106, 0.32);
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(216, 179, 106, 0.08);
+  text-align: center;
+  position: relative;
+}
+
+.collage-note-text {
+  font-family: var(--serif);
+  font-size: clamp(14.5px, 3.8vw, 17px);
+  line-height: 1.6;
+  color: var(--cream);
+  font-style: italic;
+  margin: 0 0 6px 0;
+}
+
+.collage-subnote-text {
+  font-family: var(--sans);
+  font-size: clamp(12px, 3.2vw, 13.5px);
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.letter-banner {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.letter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 24px;
+  background: rgba(216, 179, 106, 0.15);
+  border: 1px solid rgba(216, 179, 106, 0.4);
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--light-gold);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.letter-badge.space {
+  width: 8px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.collage-photo-frame {
+  position: relative;
+  width: min(92vw, 450px);
+  aspect-ratio: 16 / 11;
+  background: #fdfbf7;
+  padding: 10px 10px 34px 10px;
+  border-radius: 5px;
+  box-shadow: 0 24px 65px rgba(0, 0, 0, 0.85), 0 0 25px rgba(216, 179, 106, 0.18);
+  transform: rotate(1deg) translateZ(0);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  animation: photoLevitateAlt 7s ease-in-out infinite alternate;
+}
+
+.collage-photo-frame:hover {
+  transform: rotate(0deg) translateY(-4px) scale(1.02);
+  box-shadow: 0 32px 85px rgba(0, 0, 0, 0.95), 0 0 35px rgba(216, 179, 106, 0.3);
+}
+
+.collage-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #0d121e;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.collage-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.collage-caption-lip {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 500;
+  color: #2c2925;
+}
+
+/* Fallback Mockup for Letter Collage */
+.collage-placeholder-view {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: radial-gradient(circle at 50% 45%, #18243e 0%, #0a0f1a 100%);
+  text-align: center;
+}
+
+.collage-mock-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.mock-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.mock-polaroid {
+  width: 22px;
+  height: 28px;
+  background: #fdfbf7;
+  padding: 2px 2px 5px 2px;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mock-letter {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 11px;
+  color: #8b6b28;
+}
+
+.collage-mock-hint {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--light-gold);
+  line-height: 1.5;
+}
+
+@keyframes photoLevitateAlt {
+  0% { transform: rotate(1deg) translateY(0); }
+  100% { transform: rotate(0deg) translateY(-6px); }
+}
+
+/* Scene 03: Royal Portrait of Both Chachus */
+.royal-stage {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 8px auto 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.royal-backlight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(85vw, 360px);
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 179, 106, 0.22) 0%, rgba(216, 179, 106, 0.04) 55%, transparent 75%);
+  filter: blur(28px);
+  pointer-events: none;
+  animation: beamBreathe 5s ease-in-out infinite alternate;
+}
+
+.royal-frame {
+  position: relative;
+  width: min(82vw, 330px);
+  aspect-ratio: 4 / 5;
+  background: #0d1322;
+  padding: 10px 10px 44px 10px;
+  border-radius: 8px;
+  border: 2px solid rgba(216, 179, 106, 0.7);
+  outline: 1px solid rgba(241, 217, 155, 0.35);
+  outline-offset: -5px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(216, 179, 106, 0.2);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+  z-index: 2;
+}
+
+.royal-frame:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 35px 85px rgba(0, 0, 0, 0.95), 0 0 45px rgba(216, 179, 106, 0.35);
+}
+
+.royal-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #080c16;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(216, 179, 106, 0.25);
+}
+
+.royal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.royal-frame:hover .royal-image {
+  transform: scale(1.03);
+}
+
+.royal-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: radial-gradient(circle at 50% 38%, #162035 0%, #090e1a 100%);
+  text-align: center;
+  color: var(--cream);
+}
+
+.royal-emblem {
+  font-size: 38px;
+  line-height: 1;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 14px rgba(216, 179, 106, 0.7));
+}
+
+.royal-placeholder-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--light-gold);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.royal-placeholder-sub {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 230px;
+}
+
+.royal-caption-lip {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  color: var(--light-gold);
+  letter-spacing: 0.02em;
+}
+
+.royal-caption-hint {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+

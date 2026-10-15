@@ -1,0 +1,437 @@
+/* Scene 08: The Surprise & Scene 09: The Celebration Peak */
+
+/* Gift Box Scene */
+.gift-spotlight {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px auto 10px;
+}
+
+.spotlight-beam {
+  position: absolute;
+  top: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 179, 106, 0.22) 0%, rgba(216, 179, 106, 0.05) 50%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  animation: beamBreathe 4s ease-in-out infinite alternate;
+}
+
+.gift-container {
+  position: relative;
+  width: 150px;
+  height: 140px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 10;
+}
+
+.gift-container:hover {
+  transform: translateY(-4px) scale(1.03);
+}
+
+.gift-body {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  height: 90px;
+  background: linear-gradient(145deg, #1d2538 0%, #0f1422 100%);
+  border: 1px solid rgba(216, 179, 106, 0.4);
+  border-radius: 10px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+}
+
+.gift-ribbon-vertical {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.gift-ribbon-twin-left {
+  width: 12px;
+  height: 100%;
+  background: linear-gradient(to right, #d8b36a, #f5e4b8);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.gift-ribbon-twin-right {
+  width: 12px;
+  height: 100%;
+  background: linear-gradient(to right, #eac67e, #c69b46);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.gift-ribbon-horizontal {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  height: 18px;
+  background: linear-gradient(to bottom, #d8b36a, #f1d99b, #d8b36a);
+  box-shadow: 0 0 10px rgba(216, 179, 106, 0.4);
+}
+
+.gift-twin-emblem {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--light-gold);
+  text-shadow: 0 0 10px rgba(216, 179, 106, 0.85);
+  z-index: 7;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.gift-container.opened .gift-twin-emblem {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-25px);
+}
+
+.gift-lid-wrapper {
+  position: absolute;
+  top: 36px;
+  left: 3px;
+  right: 3px;
+  height: 28px;
+  background: linear-gradient(145deg, #242e45 0%, #131929 100%);
+  border: 1px solid rgba(216, 179, 106, 0.5);
+  border-radius: 8px;
+  z-index: 5;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s ease;
+}
+
+.gift-bow-mesh {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+}
+
+.gift-bow-mesh::before, .gift-bow-mesh::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 18px;
+  border: 4px solid var(--light-gold);
+  border-radius: 50% 50% 15% 50%;
+  box-shadow: 0 0 8px rgba(216, 179, 106, 0.5);
+}
+
+.gift-bow-mesh::before {
+  right: 18px;
+  transform: rotate(25deg);
+}
+
+.gift-bow-mesh::after {
+  left: 18px;
+  transform: scaleX(-1) rotate(25deg);
+}
+
+/* Open Animation State */
+.gift-container.opened .gift-lid-wrapper {
+  transform: translateY(-55px) rotate(-12deg);
+  opacity: 0.85;
+}
+
+.gift-container.opened .gift-bow-mesh {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-25px);
+  transition: all 0.5s ease;
+}
+
+.gift-inner-glow {
+  position: absolute;
+  inset: 15px;
+  background: radial-gradient(circle, #fff3c9 0%, #f1d99b 35%, transparent 75%);
+  border-radius: 50%;
+  opacity: 0;
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+.gift-container.opened .gift-inner-glow {
+  animation: glowBurst 1.2s forwards;
+}
+
+.gift-reveal-text {
+  font-family: var(--serif);
+  font-size: clamp(24px, 6vw, 36px);
+  color: var(--light-gold);
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(12px);
+  text-shadow: 0 0 20px rgba(216, 179, 106, 0.5);
+  transition: all 0.8s 0.4s ease;
+}
+
+.gift-container.opened + .gift-reveal-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scene 09: The Birthday Cake */
+.cake-wrapper {
+  position: relative;
+  width: 230px;
+  height: 170px;
+  margin: 15px auto 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cake-plate {
+  position: absolute;
+  bottom: 0;
+  width: 210px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(to right, #a1824a, #f1d99b, #8f723e);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+}
+
+.cake-tier-bottom {
+  position: absolute;
+  bottom: 12px;
+  width: 175px;
+  height: 70px;
+  background: linear-gradient(180deg, #f2e9dc 0%, #dec9af 50%, #c4aa8b 100%);
+  border-radius: 12px 12px 6px 6px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+}
+
+.cake-tier-bottom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 18px;
+  background: #fff;
+  border-radius: 12px 12px 0 0;
+  box-shadow: inset 0 -3px 6px rgba(216, 179, 106, 0.3);
+}
+
+.cake-tier-top {
+  position: absolute;
+  bottom: 74px;
+  width: 125px;
+  height: 52px;
+  background: linear-gradient(180deg, #fbf7f1 0%, #ebd7c0 100%);
+  border-radius: 10px 10px 4px 4px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.cake-tier-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Candles & Flames */
+.candles-row {
+  position: absolute;
+  bottom: 122px;
+  display: flex;
+  gap: 22px;
+  z-index: 8;
+}
+
+.candle-stick {
+  position: relative;
+  width: 6px;
+  height: 32px;
+  background: linear-gradient(to bottom, #fff, #d8b36a);
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(216, 179, 106, 0.4);
+}
+
+.candle-flame {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 11px;
+  height: 18px;
+  background: radial-gradient(circle at 50% 70%, #ffffff 0%, #ffea88 35%, #f4a242 70%, transparent 100%);
+  border-radius: 50% 50% 35% 35%;
+  box-shadow: 0 0 16px #f4a242, 0 0 30px #ffe57f;
+  animation: flameFlicker 0.9s ease-in-out infinite alternate;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.candle-stick:nth-child(2) .candle-flame {
+  animation-duration: 1.1s;
+  animation-delay: 0.15s;
+}
+
+.candle-stick:nth-child(3) .candle-flame {
+  animation-duration: 0.8s;
+  animation-delay: 0.3s;
+}
+
+.flames-out .candle-flame {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-6px) scale(0.2);
+}
+
+/* Falling Celebration Confetti */
+.confetti-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 80;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -30px;
+  width: var(--w, 6px);
+  height: var(--h, 12px);
+  background: var(--c, #d8b36a);
+  border-radius: 2px;
+  opacity: 0.9;
+  animation: confettiFall var(--dur, 4s) linear var(--del, 0s) infinite;
+}
+
+@keyframes beamBreathe {
+  0% { opacity: 0.6; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes glowBurst {
+  0% { opacity: 0; transform: scale(0.5); }
+  40% { opacity: 1; transform: scale(2.2); }
+  100% { opacity: 0.85; transform: scale(1.8); }
+}
+
+@keyframes flameFlicker {
+  0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+  50% { transform: translateX(-50%) scale(1.1, 0.92) rotate(2deg); }
+  100% { transform: translateX(-50%) scale(0.95, 1.08) rotate(-1deg); }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotateX(720deg) rotateY(540deg) rotateZ(360deg);
+    opacity: 0.2;
+  }
+}
+
+/* Glowing Celebration Decorations */
+.cake-halo {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(241, 217, 155, 0.28) 0%, rgba(216, 179, 106, 0.08) 50%, transparent 75%);
+  filter: blur(28px);
+  pointer-events: none;
+  opacity: 0.4;
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.celebration-active .cake-halo {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.3);
+  animation: beamBreathe 3s ease-in-out infinite alternate;
+}
+
+.decorations-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+  opacity: 0.45;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.celebration-active .decorations-row {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.deco-star {
+  color: var(--light-gold);
+  font-size: 14px;
+  text-shadow: 0 0 10px rgba(241, 217, 155, 0.8);
+  animation: orbGlow 2s ease-in-out infinite alternate;
+}
+
+/* Full Birthday Message Card */
+.full-birthday-message {
+  max-width: 520px;
+  width: min(92vw, 500px);
+  margin: 12px auto 6px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(23, 33, 52, 0.92) 0%, rgba(13, 19, 32, 0.98) 100%);
+  border: 1px solid rgba(216, 179, 106, 0.45);
+  border-radius: 12px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), 0 0 25px rgba(216, 179, 106, 0.2);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  transition: opacity 0.8s ease 0.3s, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s;
+  pointer-events: none;
+}
+
+.celebration-active .full-birthday-message {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.birthday-card-text {
+  font-family: var(--serif);
+  font-size: clamp(14px, 3.8vw, 16px);
+  line-height: 1.65;
+  color: var(--cream);
+  margin: 0;
+}
+
+.celebration-title-name {
+  font-size: clamp(24px, 6vw, 44px) !important;
+  line-height: 1.15;
+  margin: 4px auto 0;
+  max-width: 680px;
+}
+
