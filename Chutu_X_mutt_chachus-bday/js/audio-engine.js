@@ -22,15 +22,23 @@ export class AudioEngine {
 
   setup() {
     try {
-      this.pianoAudio = new Audio("assets/audio/piano.mp3");
-      this.pianoAudio.loop = true;
-      this.pianoAudio.volume = 0.35;
-      this.pianoAudio.preload = "auto";
+      fetch("assets/audio/piano.mp3", { method: "HEAD" }).then(res => {
+        if (res.ok) {
+          this.pianoAudio = new Audio("assets/audio/piano.mp3");
+          this.pianoAudio.loop = true;
+          this.pianoAudio.volume = 0.35;
+          this.pianoAudio.preload = "auto";
+        }
+      }).catch(() => {});
 
-      this.birthdayAudio = new Audio("assets/audio/birthday-song.mp3");
-      this.birthdayAudio.loop = false;
-      this.birthdayAudio.volume = 0.55;
-      this.birthdayAudio.preload = "auto";
+      fetch("assets/audio/birthday-song.mp3", { method: "HEAD" }).then(res => {
+        if (res.ok) {
+          this.birthdayAudio = new Audio("assets/audio/birthday-song.mp3");
+          this.birthdayAudio.loop = false;
+          this.birthdayAudio.volume = 0.55;
+          this.birthdayAudio.preload = "auto";
+        }
+      }).catch(() => {});
     } catch {}
   }
 

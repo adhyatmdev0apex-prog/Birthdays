@@ -107,12 +107,18 @@ export function runExperiencePreloader() {
       window.addEventListener("load", onItemDone, { once: true });
     }
 
-    // 3. Audio metadata preload
+    // 3. Audio metadata preload (if custom audio file exists)
     try {
-      const audioTest = new Audio("assets/audio/piano.mp3");
-      audioTest.preload = "auto";
-      audioTest.addEventListener("canplaythrough", onItemDone, { once: true });
-      setTimeout(onItemDone, 1200);
+      fetch("assets/audio/piano.mp3", { method: "HEAD" }).then(res => {
+        if (res.ok) {
+          const audioTest = new Audio("assets/audio/piano.mp3");
+          audioTest.preload = "auto";
+          audioTest.addEventListener("canplaythrough", onItemDone, { once: true });
+          setTimeout(onItemDone, 1200);
+        } else {
+          onItemDone();
+        }
+      }).catch(onItemDone);
     } catch {
       onItemDone();
     }
