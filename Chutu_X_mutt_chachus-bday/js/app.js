@@ -980,6 +980,9 @@ async function boot() {
     }
   }, { passive: true });
 
+  // 0. Wait for explicit user gesture to initialize and unlock Chrome & Safari Web Audio
+  await waitForUserEntry();
+
   // 1. First run the instant experience preloader to fetch all assets/fonts/audio
   await runExperiencePreloader();
 
@@ -988,6 +991,39 @@ async function boot() {
     // 3. ONLY now, when the terminal intro is completely finished and faded out, start Scene 01!
     engine.goTo(0, true);
     resetPacingTimer();
+  });
+}
+
+function waitForUserEntry() {
+  const entryScreen = document.getElementById("entry-screen");
+  if (!entryScreen) return Promise.resolve();
+
+  return new Promise((resolve) => {
+    let entered = false;
+    const proceed = () => {
+      if (entered) return;
+      entered = true;
+
+      // Unlock AudioContext immediately within this explicit user gesture (Chrome / Safari policy)
+      onFirstInteraction();
+      audio.unlock();
+      audio.playBell(523.25, 2.5, 0.12, "sine");
+
+      entryScreen.classList.add("fade-out");
+      setTimeout(() => {
+        entryScreen.remove();
+        resolve();
+      }, 750);
+    };
+
+    const enterBtn = document.getElementById("enter-btn");
+    if (enterBtn) {
+      enterBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        proceed();
+      });
+    }
+    entryScreen.addEventListener("click", proceed);
   });
 }
 

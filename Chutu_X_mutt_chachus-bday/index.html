@@ -180,6 +180,145 @@
       min-width: 38px;
       text-align: right;
     }
+
+    /* Click to Enter Gate */
+    #entry-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10001;
+      background: radial-gradient(circle at 50% 45%, #080f1d 0%, #03050a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: max(24px, env(safe-area-inset-top)) 24px max(28px, env(safe-area-inset-bottom)) 24px;
+      color: #f4eee3;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-align: center;
+      transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.8s ease;
+      will-change: opacity, transform;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+    }
+
+    #entry-screen.fade-out {
+      opacity: 0;
+      transform: scale(1.04);
+      filter: blur(12px);
+      pointer-events: none;
+    }
+
+    .entry-ambient-glow {
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(216, 179, 106, 0.22) 0%, rgba(30, 45, 75, 0.45) 50%, transparent 75%);
+      filter: blur(50px);
+      pointer-events: none;
+      animation: expPulse 3.5s ease-in-out infinite alternate;
+    }
+
+    .entry-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 440px;
+      width: 100%;
+    }
+
+    .entry-symbol {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      color: #f1d99b;
+      font-size: 16px;
+      text-shadow: 0 0 16px rgba(216, 179, 106, 0.8);
+    }
+
+    .entry-sparkle-center {
+      font-size: 24px;
+      animation: orbGlow 2s ease-in-out infinite alternate;
+    }
+
+    .entry-eyebrow {
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      color: #d8b36a;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      opacity: 0.95;
+    }
+
+    .entry-title {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(26px, 7.5vw, 38px);
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      color: #f4eee3;
+      line-height: 1.25;
+      margin: 0 0 14px 0;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .entry-amp {
+      font-style: italic;
+      color: #d8b36a;
+      font-size: 0.9em;
+    }
+
+    .entry-audio-note {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13.5px;
+      color: #9ea4b1;
+      letter-spacing: 0.04em;
+      margin-bottom: 28px;
+    }
+
+    .enter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, rgba(216, 179, 106, 0.22) 0%, rgba(216, 179, 106, 0.08) 100%);
+      border: 1px solid rgba(216, 179, 106, 0.65);
+      color: #f1d99b;
+      padding: 14px 34px;
+      border-radius: 99px;
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 12.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(216, 179, 106, 0.25);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .enter-btn:hover, .enter-btn:focus-visible {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 35px rgba(216, 179, 106, 0.45);
+      background: linear-gradient(135deg, rgba(216, 179, 106, 0.35) 0%, rgba(216, 179, 106, 0.16) 100%);
+      border-color: #f1d99b;
+      outline: none;
+    }
+
+    .enter-btn:active {
+      transform: scale(0.97);
+    }
+
+    .enter-arrow {
+      transition: transform 0.25s ease;
+    }
+
+    .enter-btn:hover .enter-arrow {
+      transform: translateX(4px);
+    }
   </style>
 
   <link rel="stylesheet" href="css/base.css">
@@ -190,6 +329,25 @@
   <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
+  <!-- Click to Enter Gate: Provides direct user gesture before anything loads to guarantee Chrome & Safari audio permission -->
+  <div id="entry-screen" class="entry-screen" role="dialog" aria-modal="true" aria-label="Enter Experience">
+    <div class="entry-ambient-glow" aria-hidden="true"></div>
+    <div class="entry-content">
+      <div class="entry-symbol" aria-hidden="true">
+        <span class="entry-sparkle">✦</span>
+        <span class="entry-sparkle-center">✨</span>
+        <span class="entry-sparkle">✦</span>
+      </div>
+      <div class="entry-eyebrow">A DEDICATED JOURNEY</div>
+      <h1 class="entry-title">For Chuttu Chachu<br><span class="entry-amp">&amp;</span> Muttu Chachu</h1>
+      <p class="entry-audio-note">Best experienced with sound 🎧</p>
+      <button id="enter-btn" class="enter-btn" type="button">
+        <span>Click to Enter</span>
+        <span class="enter-arrow">→</span>
+      </button>
+    </div>
+  </div>
+
   <!-- Instant Preloader: Shows immediately on frame 1 while browser fetches fonts, styles, scripts, and media -->
   <div id="experience-preloader" class="exp-preloader" role="status" aria-live="polite">
     <div class="exp-ambient-light" aria-hidden="true"></div>
