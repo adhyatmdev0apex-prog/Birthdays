@@ -1,0 +1,21 @@
+# Dependencies
+**/node_modules/
+node_modules/
+
+# Production / Bundles
+**/dist/
+dist/
+**/build/
+build/
+
+# Editor & IDE Configs
+**/.vscode/
+.vscode/
+
+# PlatformIO / Embedded Systems
+**/.pio/
+.pio/
+
+# OS specific files (Optional but highly recommended)
+.DS_Store
+Thumbs.db

@@ -1,0 +1,149 @@
+/* Atmospheric Background, Sparse Stars, Film Grain, and Ambient Lighting */
+
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 6px rgba(241, 217, 155, 0.5);
+  animation: starTwinkle var(--dur, 3s) ease-in-out infinite alternate;
+  opacity: var(--op, 0.6);
+}
+
+.ambient-haze {
+  position: fixed;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 40%, rgba(216, 179, 106, 0.04) 0%, rgba(17, 26, 43, 0.15) 45%, transparent 75%);
+  filter: blur(40px);
+  animation: hazeDrift 24s ease-in-out infinite alternate;
+}
+
+.grain {
+  position: fixed;
+  inset: -100%;
+  z-index: 99;
+  pointer-events: none;
+  opacity: 0.048;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+  animation: grainJitter 0.28s steps(2) infinite;
+}
+
+/* Floating light particles / dust motes */
+.particles-container {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dust-mote {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--light-gold);
+  box-shadow: 0 0 8px var(--warm-gold);
+  opacity: 0;
+  animation: floatUpward var(--speed, 12s) linear infinite;
+}
+
+/* Discreet Audio & Nav Bar */
+.audio-toggle {
+  position: fixed;
+  top: max(18px, env(safe-area-inset-top));
+  right: max(18px, env(safe-area-inset-right));
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 13, 24, 0.45);
+  border: 1px solid rgba(216, 179, 106, 0.2);
+  color: var(--light-gold);
+  font-size: 15px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  opacity: 0.75;
+}
+
+.audio-toggle:hover, .audio-toggle:active {
+  opacity: 1;
+  border-color: var(--warm-gold);
+  transform: scale(1.05);
+}
+
+/* Sparkle particles spawned on tap */
+.sparkle-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 150;
+  width: var(--size, 4px);
+  height: var(--size, 4px);
+  border-radius: 50%;
+  background: var(--light-gold);
+  box-shadow: 0 0 10px var(--warm-gold);
+  animation: sparkleFly var(--dur, 800ms) cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes starTwinkle {
+  0% { opacity: 0.15; transform: scale(0.85); }
+  100% { opacity: 0.85; transform: scale(1.15); }
+}
+
+@keyframes hazeDrift {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.08) translate(-1%, 2%); }
+  100% { transform: scale(1.02) translate(1%, -1%); }
+}
+
+@keyframes grainJitter {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, 2%); }
+  50% { transform: translate(2%, -1%); }
+  75% { transform: translate(-1%, -2%); }
+  100% { transform: translate(1%, 1%); }
+}
+
+@keyframes floatUpward {
+  0% {
+    transform: translateY(105vh) translateX(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-10vh) translateX(var(--drift, 20px));
+    opacity: 0;
+  }
+}
+
+@keyframes sparkleFly {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx, 30px), var(--ty, -30px)) scale(0.1);
+  }
+}

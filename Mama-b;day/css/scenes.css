@@ -1,0 +1,577 @@
+/* Cinematic Scenes, Layout, Transitions & Typography */
+
+.stage {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: max(28px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(32px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.025) translateZ(0);
+  transition: opacity 850ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0s linear 850ms;
+  pointer-events: none;
+}
+
+.scene.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateZ(0);
+  transition-delay: 0s;
+  pointer-events: auto;
+}
+
+.scene.exit {
+  opacity: 0;
+  transform: scale(0.975) translateY(-6px);
+  pointer-events: none;
+}
+
+.scene.behind {
+  opacity: 0;
+  transform: scale(1.03);
+  pointer-events: none;
+}
+
+.scene-inner {
+  width: min(100%, 780px);
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Typography Hierarchy */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: clamp(10px, 2.6vw, 12px);
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--warm-gold);
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.active .eyebrow {
+  animation: eyebrowRise 0.85s 0.15s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: clamp(34px, 9.5vw, 76px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: var(--cream);
+  margin: 0;
+  max-width: 760px;
+}
+
+.title.huge {
+  font-size: clamp(52px, 16vw, 120px);
+  letter-spacing: -0.035em;
+  text-shadow: 0 0 35px rgba(216, 179, 106, 0.3);
+}
+
+.subtitle {
+  font-family: var(--sans);
+  font-size: clamp(14px, 3.8vw, 18px);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 580px;
+  margin-top: 14px;
+}
+
+.gold-accent {
+  color: var(--light-gold);
+}
+
+/* Beat Animation (Blur to Sharp) */
+.beat {
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(8px);
+}
+
+.active .beat {
+  animation: beatIn 1.0s var(--delay, 0.25s) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Scene 00: Secret Initialization */
+.init-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--void);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: opacity 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.init-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.terminal-box {
+  width: min(100%, 460px);
+  border: 1px solid rgba(216, 179, 106, 0.22);
+  border-radius: 16px;
+  background: rgba(8, 13, 24, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 24px 26px;
+  box-shadow: var(--shadow-warm);
+  font-family: var(--mono);
+  font-size: clamp(12px, 3.4vw, 14px);
+  line-height: 2;
+  color: #8be9b8;
+  text-align: left;
+}
+
+.terminal-line {
+  margin: 0;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+}
+
+.cursor-blink {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  background: #8be9b8;
+  margin-left: 6px;
+  animation: cursorBlink 0.8s steps(2) infinite;
+}
+
+/* Scene 01: The Day */
+.camera-drift {
+  animation: slowCamera 16s ease-in-out infinite alternate;
+}
+
+.single-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.stagger-line {
+  font-family: var(--serif);
+  font-size: clamp(20px, 5.5vw, 34px);
+  color: var(--cream);
+  opacity: 0;
+  filter: blur(7px);
+  transform: translateY(12px);
+  margin: 0;
+}
+
+.active .stagger-line {
+  animation: beatIn 1s var(--delay, 0.5s) forwards;
+}
+
+/* Scene 02: Something Is Being Prepared */
+.floating-elements {
+  position: relative;
+  width: min(100%, 380px);
+  height: 90px;
+  margin: 0 auto 12px;
+}
+
+.ambient-item {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(17, 26, 43, 0.65);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(14px) scale(0.9);
+  animation: clueFloatIn 0.9s var(--delay, 0.2s) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.ambient-item span {
+  font-size: 18px;
+}
+
+.ambient-item:nth-child(1) { top: 10%; left: 8%; }
+.ambient-item:nth-child(2) { top: 0%; right: 10%; }
+.ambient-item:nth-child(3) { bottom: 6%; left: 24%; }
+.ambient-item:nth-child(4) { bottom: 4%; right: 22%; }
+.ambient-item:nth-child(5) { top: 28%; left: 45%; }
+
+/* Scene 03: The Clues (Interactive Mystery) */
+.clue-stage {
+  position: relative;
+  width: min(100%, 420px);
+  min-height: 180px;
+  margin: 8px auto 14px;
+}
+
+.clue-card {
+  position: absolute;
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  background: rgba(17, 26, 43, 0.75);
+  border: 1px solid rgba(216, 179, 106, 0.3);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: rotate(var(--rot, 0deg));
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.clue-card:hover, .clue-card:active {
+  transform: scale(1.1) rotate(0deg);
+  border-color: var(--light-gold);
+  box-shadow: 0 0 22px rgba(241, 217, 155, 0.4);
+}
+
+.clue-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.clue-label {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.clue-pos-1 { top: 6%; left: 8%; --rot: -6deg; }
+.clue-pos-2 { top: 2%; right: 8%; --rot: 7deg; }
+.clue-pos-3 { bottom: 8%; left: 16%; --rot: 5deg; }
+.clue-pos-4 { bottom: 4%; right: 14%; --rot: -5deg; }
+
+.whisper-modal {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.whisper-pill {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  color: var(--light-gold);
+  background: rgba(216, 179, 106, 0.12);
+  border: 1px solid rgba(216, 179, 106, 0.32);
+  padding: 6px 16px;
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: pillIn 0.35s forwards;
+}
+
+/* Scene 04: The Big Reveal */
+.reveal-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.golden-orb {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff7db 0%, #d8b36a 25%, rgba(216, 179, 106, 0.18) 55%, transparent 75%);
+  margin-bottom: 20px;
+  animation: orbPulse 3.5s ease-in-out infinite;
+  box-shadow: 0 0 60px rgba(216, 179, 106, 0.45);
+}
+
+.reveal-name {
+  animation: nameScale 8s ease-out forwards;
+}
+
+/* Scene 05: From Everyone (Rotating Paper Messages) */
+.message-stage {
+  position: relative;
+  width: min(100%, 480px);
+  min-height: 170px;
+  margin: 14px auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.message-card {
+  position: absolute;
+  width: 100%;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, rgba(23, 33, 52, 0.9) 0%, rgba(13, 19, 32, 0.98) 100%);
+  border: 1px solid rgba(216, 179, 106, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7), 0 0 20px rgba(216, 179, 106, 0.08);
+  text-align: left;
+  transform: rotate(var(--tilt, -1.5deg));
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.message-card.active-message {
+  opacity: 1;
+  pointer-events: auto;
+  transform: rotate(var(--tilt, -1.5deg)) scale(1);
+}
+
+.message-card.prev-message {
+  opacity: 0;
+  transform: rotate(calc(var(--tilt, 0deg) - 4deg)) translateY(-16px) scale(0.96);
+}
+
+.message-quote {
+  font-family: var(--serif);
+  font-size: clamp(16px, 4.2vw, 20px);
+  line-height: 1.55;
+  color: var(--cream);
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.message-author {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--warm-gold);
+}
+
+.message-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.msg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.msg-dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: all 0.3s ease;
+}
+
+.msg-dot.active::before {
+  background: var(--light-gold);
+  transform: scale(1.35);
+  box-shadow: 0 0 8px var(--warm-gold);
+}
+
+/* Scene 07: The Memories Start Connecting (Constellation / Montage) */
+.constellation-wrapper {
+  position: relative;
+  width: min(100%, 460px);
+  height: 180px;
+  margin: 10px auto 14px;
+  animation: pullAway 14s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.mini-photo {
+  position: absolute;
+  width: 95px;
+  height: 120px;
+  border: 2.5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 3px;
+  background: #11151f;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  transition: transform 0.6s ease;
+}
+
+.mini-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.const-1 { top: 0; left: 50%; transform: translateX(-50%) rotate(-3deg); }
+.const-2 { top: 20%; left: 10%; transform: rotate(4deg); }
+.const-3 { top: 20%; right: 10%; transform: rotate(-5deg); }
+.const-4 { bottom: 0; left: 34%; transform: rotate(2deg); }
+
+/* Action Buttons */
+.action-tap {
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(216, 179, 106, 0.32);
+  background: rgba(216, 179, 106, 0.08);
+  color: var(--light-gold);
+  font-family: var(--sans);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  min-height: 44px;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.active .action-tap {
+  animation: eyebrowRise 0.75s 0.7s forwards;
+}
+
+.action-tap:hover, .action-tap:active {
+  background: rgba(216, 179, 106, 0.2);
+  border-color: var(--light-gold);
+  transform: translateY(-2px);
+}
+
+/* Scene 10: The Quiet End */
+.quiet-stars {
+  font-size: 18px;
+  letter-spacing: 12px;
+  color: var(--warm-gold);
+  margin-bottom: 18px;
+  opacity: 0;
+}
+
+.active .quiet-stars {
+  animation: eyebrowRise 1s 0.2s forwards;
+}
+
+.closing-sequence {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 560px;
+}
+
+.closing-line {
+  font-family: var(--serif);
+  font-size: clamp(17px, 4.4vw, 24px);
+  line-height: 1.6;
+  color: var(--cream);
+  opacity: 0;
+  transform: translateY(10px);
+  margin: 0;
+}
+
+.active .closing-line {
+  animation: beatIn 1.1s var(--delay, 0.35s) forwards;
+}
+
+.replay-btn {
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px dotted rgba(216, 179, 106, 0.4);
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.replay-btn:hover, .replay-btn:active {
+  color: var(--light-gold);
+}
+
+/* Keyframes */
+@keyframes eyebrowRise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes beatIn {
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes cursorBlink {
+  50% { opacity: 0; }
+}
+
+@keyframes slowCamera {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.04) translate(0, -5px); }
+}
+
+@keyframes clueFloatIn {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pillIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 25px rgba(216, 179, 106, 0.3)); }
+  50% { transform: scale(1.12); filter: drop-shadow(0 0 50px rgba(216, 179, 106, 0.6)); }
+}
+
+@keyframes nameScale {
+  0% { transform: scale(0.93); opacity: 0; }
+  25% { opacity: 1; }
+  100% { transform: scale(1.03); opacity: 1; }
+}
+
+@keyframes pullAway {
+  0% { transform: scale(1) translateY(0); opacity: 0.9; }
+  100% { transform: scale(0.72) translateY(-20px); opacity: 0.55; }
+}

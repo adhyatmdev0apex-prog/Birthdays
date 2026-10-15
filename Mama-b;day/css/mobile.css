@@ -1,0 +1,27 @@
+@media(max-width:600px){
+  .scene{padding-left:20px;padding-right:20px}
+  .scene-inner{max-height:calc(100dvh - 90px);overflow:visible}
+  .title{font-size:clamp(43px,14vw,70px)}
+  .subtitle{font-size:15px;line-height:1.7;margin-top:18px}
+  .eyebrow{font-size:10px;margin-bottom:18px}
+  .clue-field{height:210px}
+  .clue{width:62px;height:62px;border-radius:16px}
+  .clue span{font-size:21px}
+  .clue:nth-child(1){margin-left:-110px;margin-top:-25px}
+  .clue:nth-child(2){margin-left:95px;margin-top:-40px}
+  .clue:nth-child(3){margin-left:-80px;margin-top:65px}
+  .clue:nth-child(4){margin-left:80px;margin-top:70px}
+  .message{padding:15px 16px}
+  .message p{font-size:16px}
+  .memory-wrap{max-width:min(84vw,370px)}
+  .gift{transform:scale(.88);margin-top:18px;margin-bottom:14px}
+  .cake{transform:scale(.86);margin-top:4px}
+  .control{padding:11px 15px;font-size:11px}
+}
+@media(orientation:landscape) and (max-height:520px){
+  .scene{padding-top:20px;padding-bottom:20px}
+  .scene-inner{transform:scale(.78);transform-origin:center}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}

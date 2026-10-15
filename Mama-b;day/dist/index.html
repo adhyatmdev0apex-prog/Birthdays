@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#03050a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="A cinematic birthday surprise experience for Mama.">
+  <title>For Mama — Happy Birthday</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Zero-dependency instant preloader styles for frame-1 render before any network fetch -->
+  <style id="exp-preloader-css">#experience-preloader{z-index:9999;padding:max(20px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom)) 24px;color:#f4eee3;will-change:opacity, transform;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;background:#03050a;flex-direction:column;justify-content:center;align-items:center;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;transition:opacity .75s cubic-bezier(.2,.8,.2,1),transform .75s cubic-bezier(.2,.8,.2,1),filter .75s;display:flex;position:fixed;top:0;bottom:0;left:0;right:0;overflow:hidden}#experience-preloader.fade-out{opacity:0;filter:blur(12px);pointer-events:none;transform:scale(1.05)}.exp-ambient-light{filter:blur(40px);pointer-events:none;background:radial-gradient(circle,#d8b36a29 0%,#111a2b73 50%,#0000 72%);border-radius:50%;width:320px;height:320px;animation:3s ease-in-out infinite alternate expPulse;position:absolute}@keyframes expPulse{0%{opacity:.5;transform:scale(.9)}to{opacity:.95;transform:scale(1.2)}}.exp-content{z-index:2;text-align:center;flex-direction:column;align-items:center;width:100%;max-width:340px;display:flex;position:relative}.exp-celestial-orb{justify-content:center;align-items:center;width:72px;height:72px;margin-bottom:22px;display:flex;position:relative}.orb-ring-outer{border:1.5px dashed #d8b36a61;border-radius:50%;animation:12s linear infinite orbRotate;position:absolute;top:0;bottom:0;left:0;right:0}.orb-ring-inner{border:1px solid #0000;border-color:#0000 #f1d99b8c;border-radius:50%;animation:5s linear infinite orbRotateRev;position:absolute;top:7px;bottom:7px;left:7px;right:7px}.orb-core{color:#f1d99b;text-shadow:0 0 16px #d8b36ad9;font-size:24px;animation:2s ease-in-out infinite alternate orbGlow}@keyframes orbRotate{to{transform:rotate(360deg)}}@keyframes orbRotateRev{to{transform:rotate(-360deg)}}@keyframes orbGlow{0%{opacity:.8;transform:scale(.92)}to{opacity:1;transform:scale(1.12)}}.exp-eyebrow{letter-spacing:.28em;color:#d8b36a;text-transform:uppercase;opacity:.9;margin-bottom:10px;font-family:DM Mono,ui-monospace,monospace;font-size:10px}.exp-title{letter-spacing:-.01em;color:#f4eee3;margin-bottom:22px;font-family:Playfair Display,Georgia,serif;font-size:clamp(20px,5.5vw,25px);font-weight:500;line-height:1.3}.exp-progress-container{background:#ffffff14;border-radius:99px;width:100%;height:3.5px;margin-bottom:12px;position:relative;overflow:hidden;box-shadow:inset 0 1px 2px #00000080}.exp-progress-bar{background:linear-gradient(90deg,#d8b36a,#f1d99b);border-radius:99px;width:0%;height:100%;transition:width .2s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px #d8b36ab3}.exp-status-row{color:#9ea4b1;letter-spacing:.03em;justify-content:space-between;align-items:center;width:100%;font-family:DM Mono,ui-monospace,monospace;font-size:11px;display:flex}.exp-status-text{white-space:nowrap;text-overflow:ellipsis;max-width:80%;transition:opacity .2s;overflow:hidden}.exp-status-pct{color:#d8b36a;text-align:right;min-width:38px;font-weight:600}</style>
+
+  <script type="module" crossorigin src="/assets/index-Bt70ZjS8.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-QpsfgHNR.css">
+</head>
+<body>
+  <!-- Instant Preloader: Shows immediately on frame 1 while browser fetches fonts, styles, scripts, and media -->
+  <div id="experience-preloader" class="exp-preloader" role="status" aria-live="polite">
+    <div class="exp-ambient-light" aria-hidden="true"></div>
+    <div class="exp-content">
+      <div class="exp-celestial-orb" aria-hidden="true">
+        <div class="orb-ring-outer"></div>
+        <div class="orb-ring-inner"></div>
+        <div class="orb-core">✨</div>
+      </div>
+      <div class="exp-eyebrow">PREPARING THE EXPERIENCE</div>
+      <h1 class="exp-title">Weaving moments together…</h1>
+      <div class="exp-progress-container">
+        <div id="exp-progress-bar" class="exp-progress-bar"></div>
+      </div>
+      <div class="exp-status-row">
+        <span id="exp-status-text" class="exp-status-text">Gathering memories & melodies…</span>
+        <span id="exp-status-pct" class="exp-status-pct">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="stars" class="stars" aria-hidden="true"></div>
+  <div class="ambient-haze" aria-hidden="true"></div>
+  <div id="particles" class="particles-container" aria-hidden="true"></div>
+  <div id="grain" class="grain" aria-hidden="true"></div>
+
+  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Toggle Sound" title="Sound: Click to toggle">
+    <span id="audio-icon">♪</span>
+  </button>
+
+  <div id="app" aria-live="polite"></div>
+
+</body>
+</html>
