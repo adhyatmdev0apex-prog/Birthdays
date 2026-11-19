@@ -1,0 +1,12 @@
+{
+  "name": "birthday-studio-dashboard",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A private admin dashboard for planning a cinematic birthday tribute.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

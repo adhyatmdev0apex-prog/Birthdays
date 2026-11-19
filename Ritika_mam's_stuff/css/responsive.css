@@ -1,0 +1,158 @@
+/* =========================================================================
+   RESPONSIVE.CSS — Mobile-First Optimization & Desktop Cinematic Scaling
+   ========================================================================= */
+
+/* Mobile Devices (<= 600px) */
+@media (max-width: 600px) {
+  .scene {
+    padding: max(62px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom)) 16px;
+  }
+
+  .scene-inner {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .eyebrow {
+    margin-bottom: 10px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+  }
+
+  .title {
+    font-size: clamp(28px, 8.2vw, 42px);
+  }
+
+  .subtitle {
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+
+  .beacon-stage {
+    width: 92px;
+    height: 92px;
+    margin-bottom: 14px;
+  }
+
+  .flip-grid {
+    gap: 10px;
+    margin: 14px auto 8px;
+  }
+
+  .flip-card {
+    height: 152px;
+  }
+
+  .flip-face {
+    padding: 12px 10px;
+  }
+
+  .flip-icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+
+  .portrait-frame {
+    width: min(76vw, 275px);
+    padding: 9px 9px 40px 9px;
+  }
+
+  .photo-frame {
+    width: min(78vw, 285px);
+    padding: 10px 10px 38px 10px;
+  }
+
+  .photo-caption-lip {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    font-size: 12.5px;
+  }
+
+  .memory-controls {
+    margin-top: 14px;
+    gap: 14px;
+  }
+
+  .message-stage {
+    min-height: 185px;
+  }
+
+  .message-card {
+    padding: 18px 18px;
+  }
+
+  .gift-container {
+    transform: scale(0.88);
+  }
+
+  .cake-wrapper {
+    transform: scale(0.85);
+    margin: 6px auto 2px;
+  }
+
+  .hud-chapter-pill {
+    font-size: 9px;
+    padding: 5px 10px;
+  }
+}
+
+/* Very Small Phones (<= 360px) */
+@media (max-width: 360px) {
+  .flip-card {
+    height: 162px;
+  }
+
+  .flip-back p {
+    font-size: 12px;
+  }
+}
+
+/* Landscape Phone */
+@media (orientation: landscape) and (max-height: 520px) {
+  .scene {
+    justify-content: flex-start;
+    padding-top: max(54px, env(safe-area-inset-top));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+
+  .portrait-frame,
+  .photo-frame {
+    width: 220px;
+  }
+}
+
+/* Desktop Cinematic Scaling (>= 1024px) */
+@media (min-width: 1024px) {
+  .scene-inner {
+    max-width: 840px;
+  }
+
+  .flip-grid {
+    max-width: 640px;
+    gap: 18px;
+  }
+
+  .flip-card {
+    height: 182px;
+  }
+
+  .portrait-frame {
+    width: 330px;
+  }
+
+  .photo-frame {
+    width: 348px;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

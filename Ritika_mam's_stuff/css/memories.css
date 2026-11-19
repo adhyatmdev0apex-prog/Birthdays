@@ -1,0 +1,387 @@
+/* =========================================================================
+   MEMORIES.CSS — Dedicated Portrait Frame, Polaroid Album & Lightbox Modal
+   ========================================================================= */
+
+/* Portrait Frame (Scene 02) */
+.portrait-stage {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 14px auto 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1100px;
+}
+
+.portrait-backlight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(82vw, 340px);
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 179, 106, 0.24) 0%, rgba(216, 179, 106, 0.05) 55%, transparent 75%);
+  filter: blur(30px);
+  pointer-events: none;
+  animation: beamBreathe 5s ease-in-out infinite alternate;
+}
+
+.portrait-frame {
+  position: relative;
+  width: min(78vw, 310px);
+  aspect-ratio: 4 / 5;
+  background: #0d1424;
+  padding: 10px 10px 44px 10px;
+  border-radius: 10px;
+  border: 2px solid rgba(216, 179, 106, 0.68);
+  outline: 1px solid rgba(243, 223, 170, 0.32);
+  outline-offset: -5px;
+  box-shadow: 0 26px 72px rgba(0, 0, 0, 0.85), 0 0 36px rgba(216, 179, 106, 0.18);
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+  z-index: 2;
+}
+
+.portrait-frame:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 34px 86px rgba(0, 0, 0, 0.92), 0 0 46px rgba(216, 179, 106, 0.32);
+}
+
+.portrait-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #080d18;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid rgba(216, 179, 106, 0.25);
+}
+
+.portrait-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  transition: transform 0.8s ease;
+}
+
+.portrait-frame:hover .portrait-image {
+  transform: scale(1.03);
+}
+
+.portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at 50% 38%, #182540 0%, #090f1d 100%);
+  text-align: center;
+}
+
+.portrait-monogram {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(216, 179, 106, 0.55);
+  background: radial-gradient(circle, rgba(216, 179, 106, 0.16) 0%, transparent 72%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--light-gold);
+  margin-bottom: 14px;
+  box-shadow: 0 0 24px rgba(216, 179, 106, 0.25);
+}
+
+.portrait-placeholder-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--light-gold);
+  margin-bottom: 8px;
+}
+
+.portrait-placeholder-sub {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 220px;
+}
+
+.portrait-caption-lip {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  color: var(--light-gold);
+}
+
+.portrait-caption-hint {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* =========================================================================
+   POLAROID MEMORY ALBUM (Scene 04)
+   ========================================================================= */
+
+.memory-stage {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin: 14px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1200px;
+}
+
+.photo-frame {
+  position: relative;
+  width: min(82vw, 336px);
+  aspect-ratio: 4 / 5;
+  background: #fdfbf7;
+  padding: 13px 13px 46px 13px;
+  border-radius: 4px;
+  box-shadow: 0 24px 68px rgba(0, 0, 0, 0.78), 0 6px 22px rgba(216, 179, 106, 0.14);
+  transform: rotate(-1.3deg) translateZ(0);
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.55s ease;
+  cursor: pointer;
+  animation: photoLevitate 6s ease-in-out infinite alternate;
+}
+
+.photo-frame:hover {
+  transform: rotate(0deg) translateY(-4px) scale(1.02);
+  box-shadow: 0 34px 82px rgba(0, 0, 0, 0.88), 0 8px 30px rgba(216, 179, 106, 0.24);
+}
+
+.photo-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #0f1626;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.photo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  transition: transform 0.8s ease;
+}
+
+.photo-frame:hover .photo-image {
+  transform: scale(1.04);
+}
+
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at 50% 38%, #182642 0%, #0b1120 100%);
+  text-align: center;
+  color: var(--cream);
+}
+
+.photo-placeholder-icon {
+  font-size: 32px;
+  color: var(--light-gold);
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 10px rgba(216, 179, 106, 0.45));
+}
+
+.photo-placeholder-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--light-gold);
+  margin-bottom: 8px;
+}
+
+.photo-placeholder-caption {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 240px;
+}
+
+.photo-caption-lip {
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #2b2722;
+}
+
+.photo-caption-hint {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7d756a;
+}
+
+.memory-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.nav-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(216, 179, 106, 0.28);
+  background: rgba(15, 24, 42, 0.72);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.28s ease;
+  backdrop-filter: blur(8px);
+}
+
+.nav-arrow:hover, .nav-arrow:active {
+  background: rgba(216, 179, 106, 0.2);
+  border-color: var(--light-gold);
+  color: var(--light-gold);
+  transform: scale(1.08);
+}
+
+.memory-counter {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--warm-gold);
+}
+
+/* =========================================================================
+   FULLSCREEN EXPANDED LIGHTBOX MODAL
+   ========================================================================= */
+
+.expanded-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(4, 7, 17, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.38s ease, visibility 0.38s ease;
+}
+
+.expanded-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.expanded-content {
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.expanded-image-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 55vh;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(216, 179, 106, 0.35);
+  margin-bottom: 20px;
+  background: #0b1120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expanded-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.expanded-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 5.5vw, 30px);
+  color: var(--light-gold);
+  margin-bottom: 8px;
+}
+
+.expanded-caption {
+  font-family: var(--sans);
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 430px;
+}
+
+.close-expanded {
+  position: absolute;
+  top: max(22px, env(safe-area-inset-top));
+  right: max(22px, env(safe-area-inset-right));
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  cursor: pointer;
+  transition: all 0.28s ease;
+}
+
+.close-expanded:hover {
+  border-color: var(--light-gold);
+  color: var(--light-gold);
+}
+
+@keyframes photoLevitate {
+  0% { transform: rotate(-1.3deg) translateY(0); }
+  100% { transform: rotate(-0.4deg) translateY(-7px); }
+}
