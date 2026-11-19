@@ -94,8 +94,12 @@ function getPrivateKey(config) {
   if (config.privateKey) return config.privateKey;
   if (config.privateKeyPath) {
     const keyPath = path.resolve(ROOT, config.privateKeyPath);
-    if (keyPath !== ROOT && !keyPath.startsWith(`${ROOT}${path.sep}`)) {
-      throw new Error("GITHUB_APP_PRIVATE_KEY_PATH must point inside the dashboard folder.");
+    const allowedRoots = [ROOT, path.resolve("/etc/secrets")];
+    const isAllowedPath = allowedRoots.some((root) =>
+      keyPath === root || keyPath.startsWith(`${root}${path.sep}`)
+    );
+    if (!isAllowedPath) {
+      throw new Error("GITHUB_APP_PRIVATE_KEY_PATH must point inside the dashboard folder or Render's /etc/secrets directory.");
     }
     return fs.readFileSync(keyPath, "utf8");
   }
@@ -129,9 +133,11 @@ function githubSetupError(config) {
   if (!config.installationId) missing.push("GITHUB_APP_INSTALLATION_ID");
   if (!config.owner) missing.push("GITHUB_OWNER");
   if (!config.repository) missing.push("GITHUB_REPOSITORY");
-  if (!config.privateKey && !config.privateKeyPath) missing.push("GITHUB_APP_PRIVATE_KEY_PATH");
+  if (!config.privateKey && !config.privateKeyPath) {
+    missing.push("GITHUB_APP_PRIVATE_KEY_PATH or GITHUB_APP_PRIVATE_KEY");
+  }
   if (missing.length) return `Add ${missing.join(", ")} to .env to enable GitHub App sync.`;
-  return "The GitHub App private key could not be read. Check GITHUB_APP_PRIVATE_KEY_PATH.";
+  return "The GitHub App private key could not be read. Check GITHUB_APP_PRIVATE_KEY_PATH or GITHUB_APP_PRIVATE_KEY.";
 }
 
 function base64Url(value) {

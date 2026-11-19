@@ -281,7 +281,7 @@
           <div class="setup-notes" id="setup-notes">
             <div><span>01</span><p>Create a GitHub App with <strong>Contents: read &amp; write</strong> and <strong>Metadata: read-only</strong>.</p></div>
             <div><span>02</span><p>Install it upon this repository alone. No webhook or browser token is needed for local use.</p></div>
-            <div><span>03</span><p>Copy <code>.env.example</code> to <code>.env</code>, add the App ID, installation ID, owner, repository, and private-key path, then restart the server.</p></div>
+            <div><span>03</span><p>For local use, copy <code>.env.example</code> to <code>.env</code> and add the App ID, installation ID, owner, repository, and private-key path. For Render, add a Secret File named <code>github-app-private-key.pem</code> and set <code>GITHUB_APP_PRIVATE_KEY_PATH</code> to <code>/etc/secrets/github-app-private-key.pem</code>. The key remains outside the connected Git repository; leave <code>GITHUB_APP_PRIVATE_KEY</code> unset, lest it take precedence.</p></div>
           </div>
           <a class="text-link setup-guide-link" href="/GITHUB_APP_SETUP.md" target="_blank" rel="noreferrer">Open the full GitHub App setup guide <span aria-hidden="true">↗</span></a>
         </div>

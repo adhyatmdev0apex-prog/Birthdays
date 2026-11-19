@@ -76,6 +76,14 @@ repository name, and branch. Keep the downloaded `.pem` key inside this folder
 as `github-app-private-key.pem` (or update `GITHUB_APP_PRIVATE_KEY_PATH`).
 Restart the dashboard after configuration.
 
+For Render, do not add the private key to the connected Git repository. Add it
+under **Environment → Secret Files** with the filename
+`github-app-private-key.pem`, then set
+`GITHUB_APP_PRIVATE_KEY_PATH=/etc/secrets/github-app-private-key.pem` in the
+service's environment variables. Render mounts the secret at that path; it does
+not add the secret file to your repository. Leave `GITHUB_APP_PRIVATE_KEY`
+unset when using the file path.
+
 When configured, the server uses short-lived installation tokens and can read
 or update the draft and image files inside:
 

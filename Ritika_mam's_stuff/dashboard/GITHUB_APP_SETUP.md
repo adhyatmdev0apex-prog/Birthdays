@@ -72,6 +72,9 @@ installation ID is `12345678`.
 4. Keep this key private. Do not paste it into chat, the browser, or source
    code. The dashboard's `.gitignore` excludes the key and `.env` file.
 
+For a Render deployment, do not add the key to the connected Git repository.
+Instead, add it as a Render Secret File as described below.
+
 ## 4. Configure the dashboard
 
 In the `dashboard` folder, copy `.env.example` to a new file named `.env`.
@@ -95,7 +98,30 @@ GITHUB_BRANCH=main
 
 Do not upload or commit `.env` or the `.pem` file.
 
-## 5. Start and check the dashboard
+## 5. Configure Render
+
+Render Secret Files are stored by Render, not committed to your connected Git
+repository. In your Render service:
+
+1. Open **Environment** and choose **Add Secret File**.
+2. Set **Filename** to `github-app-private-key.pem`.
+3. Paste the complete private key into **Contents**, including its existing
+   `BEGIN` and `END` lines.
+4. Add or update the environment variable
+   `GITHUB_APP_PRIVATE_KEY_PATH` with this exact value:
+
+   ```text
+   /etc/secrets/github-app-private-key.pem
+   ```
+
+5. Ensure `GITHUB_APP_PRIVATE_KEY` is unset, since it takes precedence over the
+   file path.
+6. Save the changes and let Render deploy the service.
+
+Keep the key only in Render's Secret File; do not paste it into source code,
+commit it, or send it in chat.
+
+## 6. Start and check the dashboard
 
 Open a terminal in the dashboard folder and run:
 
