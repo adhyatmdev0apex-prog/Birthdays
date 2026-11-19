@@ -18,14 +18,33 @@ localhost only. Without GitHub App credentials, drafts are saved in
 
 ## Add photos and messages
 
-Open the **Photos & messages** section in the dashboard to add a portrait, up
-to four memory photos, their titles and captions, three birthday wishes, the
-birthday-card message, and the final message and signature. Images must be JPG,
-PNG, or WebP and no larger than 5 MB each. Save the draft to store uploads in
-`uploads/` and their text and paths in `studio-config.json`.
+In **Tribute details**, enter the birthday person's name and profession or role
+(for example, teacher, doctor, artist, or friend), plus their relationship to
+Ritika Ma'am if relevant. The relationship is optional. The live note preview
+shows the role and relationship, and the fields are saved in
+`studio-config.json`.
 
-The dashboard keeps these files as planning content in its own folder; it does
-not insert them into or publish the separate tribute website.
+Open the **Photos & messages** section to add a portrait, up to four memory
+photos, their titles and captions, three birthday wishes, the birthday-card
+message, and the final message and signature. Images must be JPG, PNG, or WebP
+and no larger than 5 MB each. Save the draft to store uploads in `uploads/` and
+their text and paths in `studio-config.json`.
+
+The tribute page reads the saved birthday name, profession, relationship,
+headline, opening thought, portrait, memories, wishes, birthday-card message,
+and final message from `dashboard/studio-config.json` when the project is served
+over HTTP or hosted. The dashboard does not publish the site. The optional
+birthday date and photo-reference direction are planning details only.
+
+To preview the tribute locally with the dashboard profile, start a static server
+from the `Ritika_mam's_stuff` project folder (one level above `dashboard`):
+
+```powershell
+python -m http.server 8000
+```
+
+Then open [http://127.0.0.1:8000](http://127.0.0.1:8000). Opening `index.html`
+directly as a `file://` URL cannot load the profile JSON; use the local server.
 
 ## Reference blend
 

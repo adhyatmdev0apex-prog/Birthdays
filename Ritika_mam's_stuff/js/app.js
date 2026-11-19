@@ -2,7 +2,8 @@
    APP.JS — Scene Engine, Entry Gate, Preloader, Universe Boot & Controls
    ========================================================================= */
 
-(function () {
+(async function () {
+  await (window.TRIBUTE_CONFIG_READY || Promise.resolve());
   const { el, sleep } = window.Tribute.Utils;
   const { Anim, AudioEngine, runPreloader, createScenes } = window.Tribute;
   const data = window.TEACHER_DATA;

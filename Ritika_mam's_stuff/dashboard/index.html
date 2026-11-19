@@ -158,9 +158,13 @@
         </div>
         <div class="draft-grid">
           <form class="editor-card" id="draft-form">
-            <div class="editor-heading"><span class="editor-icon">✎</span><div><h3>Personalize the brief</h3><p>These details are saved to the dashboard draft only.</p></div></div>
-            <label for="recipient">Who is this tribute for?</label>
+            <div class="editor-heading"><span class="editor-icon">✎</span><div><h3>Personalize the brief</h3><p>The name, profession, and connection also personalize the tribute page.</p></div></div>
+            <label for="recipient">Who is having the birthday?</label>
             <input id="recipient" name="recipient" maxlength="80" autocomplete="off" required>
+            <label for="profession">Their profession or role</label>
+            <input id="profession" name="profession" maxlength="80" placeholder="e.g. Teacher, doctor, artist, friend" autocomplete="off" required>
+            <label for="relationshipToRitika">Their relationship to Ritika Ma'am <span class="optional">(optional)</span></label>
+            <input id="relationshipToRitika" name="relationshipToRitika" maxlength="100" placeholder="e.g. mother, friend, colleague, or mentor" autocomplete="off">
             <label for="occasionDate">Birthday date <span class="optional">(optional)</span></label>
             <input id="occasionDate" name="occasionDate" type="date">
             <label for="headline">A line to set the tone</label>
@@ -177,6 +181,7 @@
             <div class="preview-orb" aria-hidden="true"><span>✧</span></div>
             <p class="preview-eyebrow">A BIRTHDAY TRIBUTE</p>
             <h3 id="preview-recipient">For Ritika Ma'am</h3>
+            <p class="preview-identity" id="preview-identity">Teacher · A birthday tribute for someone special</p>
             <p class="preview-headline" id="preview-headline">A birthday tribute, shaped with gratitude.</p>
             <div class="preview-divider"><span>✦</span></div>
             <blockquote id="preview-opening">Some people make every ordinary moment feel like it belongs in a story.</blockquote>

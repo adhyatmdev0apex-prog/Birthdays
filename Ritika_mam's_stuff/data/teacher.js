@@ -20,9 +20,9 @@ window.TEACHER_DATA = {
 
   intro: {
     line1: "There are<br>8 billion people<br>on this planet.",
-    line2: "Today,<br>one extraordinary teacher<br>has a birthday.",
+    line2: "Today,<br>one extraordinary person<br>has a birthday.",
     line3Prefix: "Happy Birthday,",
-    subtitle: "For every lesson taught with patience and every mind you have inspired.",
+    subtitle: "A birthday celebration for someone wonderful and deeply appreciated.",
     cta: "Begin the Journey →"
   },
 
@@ -32,8 +32,8 @@ window.TEACHER_DATA = {
     image: "assets/images/portrait.jpg",
     altImage: "assets/images/teacher.jpg",
     captionTitle: "Ritika Ma'am",
-    modalCaption: "With patience, grace, and an inspiring spirit that brightens every classroom.",
-    subtitle: "A teacher's influence never fades — it lives on in every student who learned to believe in themselves.",
+    modalCaption: "With warmth, grace, and a spirit that brightens every room.",
+    subtitle: "A special person whose kindness and presence make a lasting difference.",
     cta: "Today's Mission →"
   },
 
@@ -58,7 +58,7 @@ window.TEACHER_DATA = {
       {
         icon: "📖",
         title: "Clarity & Wisdom",
-        back: "You turn the most challenging topics into moments of genuine understanding and curiosity."
+        back: "You make ordinary days brighter with your thoughtfulness and unique way of seeing the world."
       },
       {
         icon: "🌟",
@@ -68,12 +68,12 @@ window.TEACHER_DATA = {
       {
         icon: "🧭",
         title: "True Mentorship",
-        back: "Your guidance reaches far beyond textbooks and exams — it shapes how we think and grow."
+        back: "Your support and perspective make a difference in all the ways that matter."
       },
       {
         icon: "✨",
         title: "Lasting Inspiration",
-        back: "Every class leaves a quiet spark of confidence that stays with us long after the bell rings."
+        back: "Every conversation leaves a quiet spark of joy that stays with us long after the moment passes."
       }
     ],
     cta: "Step Into the Memories →"
@@ -86,26 +86,26 @@ window.TEACHER_DATA = {
       {
         id: "01",
         image: "assets/images/memories/01.jpg",
-        title: "Lessons Filled With Light",
-        caption: "The kind of classes where learning felt effortless and curiosity was always welcomed."
+        title: "Light in Every Moment",
+        caption: "A snapshot of the moments that make this story yours."
       },
       {
         id: "02",
         image: "assets/images/memories/02.jpg",
         title: "Smiles Along the Way",
-        caption: "Shared laughter, warm conversations, and the joy of being encouraged by a wonderful mentor."
+        caption: "Shared laughter and little moments that stay with us."
       },
       {
         id: "03",
         image: "assets/images/memories/03.jpg",
         title: "Moments of Pride",
-        caption: "Every milestone reached felt brighter knowing you were cheering us on."
+        caption: "A milestone made brighter by having you there."
       },
       {
         id: "04",
         image: "assets/images/memories/04.jpg",
         title: "Gratitude Held in Time",
-        caption: "Snapshots of a chapter we will always look back on with deep respect and fondness."
+        caption: "A memory we will always look back on with warmth."
       }
     ],
     cta: "Read Wishes & Letter →"
@@ -116,12 +116,12 @@ window.TEACHER_DATA = {
     title: "Words From Our Hearts",
     wishes: [
       {
-        text: "Wishing you a year filled with good health, peaceful mornings, and the same joy you bring into every classroom.",
+        text: "Wishing you a year filled with good health, peaceful mornings, and all the happiness you deserve.",
         author: "With deepest gratitude"
       },
       {
-        text: "Thank you for never giving up on us, celebrating our small wins, and showing us what true dedication looks like.",
-        author: "From your grateful students"
+        text: "Thank you for the kindness, encouragement, and joy you bring to the people around you.",
+        author: "With love and appreciation"
       },
       {
         text: "May this new year bring you new adventures, well-deserved rest, and countless reasons to smile every day.",
@@ -130,8 +130,8 @@ window.TEACHER_DATA = {
     ],
     salutation: "Dear Ritika Ma'am,",
     letterParagraphs: [
-      "Great teachers teach what is written on the page, but extraordinary teachers like you teach patience, integrity, curiosity, and quiet confidence simply by the way you show up every day.",
-      "Thank you for your warmth, your encouragement, and your belief in every student. We hope today surrounds you with the same appreciation and happiness you give all year long."
+      "Some people make life brighter simply by being themselves. Today is a chance to celebrate the kindness, joy, and warmth you share so generously.",
+      "Thank you for the care and encouragement you give to the people around you. We hope today surrounds you with the same happiness you bring to others."
     ],
     closing: "With deepest respect and warmest wishes, always.",
     cta: "Step Under the Night Sky →"
@@ -150,7 +150,7 @@ window.TEACHER_DATA = {
     titleName: "Ritika Ma'am!",
     tapHint: "Tap the cake to blow out the candles & play the birthday song 🎂",
     wishedText: "May every wish you make today come true ✨",
-    cardText: "Wishing you a truly wonderful birthday and a bright, fulfilling year ahead, Ritika Ma'am! May good health, peace, and happiness follow you wherever you go.",
+    cardText: "Wishing you a truly wonderful birthday and a bright, fulfilling year ahead! May good health, peace, and happiness follow you wherever you go.",
     cta: "Run Final Tribute →"
   },
 
@@ -178,14 +178,14 @@ window.TEACHER_DATA = {
     title: "A Journey Through Today",
     pages: [
       { kicker: "Cover", icon: "📖", title: "For Ritika Ma'am", body: "Turn the pages to revisit every chapter of your birthday tribute." },
-      { kicker: "Chapter 01", icon: "✦", title: "Universe Initialized", body: "Constellations aligned and the universe located an extraordinary teacher." },
-      { kicker: "Chapter 02", icon: "☁️", title: "Out of 8 Billion", body: "Among billions on this planet, today celebrates one inspiring mentor." },
+      { kicker: "Chapter 01", icon: "✦", title: "Universe Initialized", body: "Constellations aligned and the universe found someone extraordinary to celebrate." },
+      { kicker: "Chapter 02", icon: "☁️", title: "Out of 8 Billion", body: "Among billions on this planet, today celebrates someone deeply loved." },
       { kicker: "Chapter 03", icon: "🎁", title: "Today's Mission", body: "Smile brightly, enjoy cake, take a break, and feel deeply appreciated." },
-      { kicker: "Chapter 04", icon: "🌟", title: "Cards of Gratitude", body: "Clarity, patience, mentorship, and lasting inspiration beyond the classroom." },
+      { kicker: "Chapter 04", icon: "🌟", title: "Cards of Gratitude", body: "Kindness, encouragement, laughter, and all the little things that make you special." },
       { kicker: "Chapter 05", icon: "📷", title: "Cherished Moments", body: "Lessons filled with light, shared smiles, and milestones worth keeping." },
       { kicker: "Chapter 06", icon: "☾", title: "Under the Night Sky", body: "Shooting stars carried quiet wishes of health, peace, and happiness." },
       { kicker: "Chapter 07", icon: "🎂", title: "The Celebration", body: "Candles, birthday song, confetti, and fireworks lighting up the sky." },
-      { kicker: "Final Page", icon: "✨", title: "Happy Birthday, Ma'am", body: "Thank you for being a teacher we will always remember with pride and gratitude." }
+      { kicker: "Final Page", icon: "✨", title: "Happy Birthday", body: "Thank you for being someone we will always remember with love and gratitude." }
     ]
   }
 };

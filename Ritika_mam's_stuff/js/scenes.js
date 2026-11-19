@@ -19,6 +19,16 @@ window.Tribute.createScenes = function createScenes({ engine, audio, data }) {
     return scene;
   }
 
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[character]);
+  }
+
   /* -----------------------------------------------------------------------
      SHARED FULLSCREEN LIGHTBOX MODAL
      ----------------------------------------------------------------------- */
@@ -79,8 +89,8 @@ window.Tribute.createScenes = function createScenes({ engine, audio, data }) {
 
     const s3 = el("div", "intro-slide");
     s3.innerHTML = `
-      <h1>${d.line3Prefix}<br><span class="intro-hero-name">${data.teacherName}</span> ✨</h1>
-      <p class="subtitle" style="margin-top:14px;">${d.subtitle}</p>
+      <h1>${d.line3Prefix}<br><span class="intro-hero-name">${escapeHtml(data.teacherName)}</span> ✨</h1>
+      <p class="subtitle" style="margin-top:14px;">${escapeHtml(d.subtitle)}</p>
     `;
 
     stage.append(s1, s2, s3);
@@ -154,11 +164,11 @@ window.Tribute.createScenes = function createScenes({ engine, audio, data }) {
     img.alt = `${data.teacherName} Portrait`;
 
     const placeholder = el("div", "portrait-placeholder");
-    placeholder.innerHTML = `
-      <div class="portrait-monogram">R</div>
-      <h3 class="portrait-placeholder-title">${data.teacherName}</h3>
-      <p class="portrait-placeholder-sub">${data.subtitleRole}</p>
-    `;
+    placeholder.append(
+      el("div", "portrait-monogram", data.teacherName.slice(0, 1).toUpperCase()),
+      el("h3", "portrait-placeholder-title", data.teacherName),
+      el("p", "portrait-placeholder-sub", data.subtitleRole)
+    );
     inner.append(img, placeholder);
 
     const lip = el("div", "portrait-caption-lip");
@@ -498,10 +508,10 @@ window.Tribute.createScenes = function createScenes({ engine, audio, data }) {
       const card = el("div", "message-card");
       card.style.padding = "16px 20px";
       card.style.setProperty("--tilt", i % 2 === 0 ? "-0.8deg" : "0.8deg");
-      card.innerHTML = `
-        <p class="message-quote" style="font-size:clamp(14.5px,3.6vw,17px);margin-bottom:8px;">“${w.text}”</p>
-        <span class="message-author">— ${w.author}</span>
-      `;
+      const quote = el("p", "message-quote", `“${w.text}”`);
+      quote.style.fontSize = "clamp(14.5px,3.6vw,17px)";
+      quote.style.marginBottom = "8px";
+      card.append(quote, el("span", "message-author", `— ${w.author}`));
       wishStrip.appendChild(card);
       cards.push(card);
 
@@ -611,7 +621,7 @@ window.Tribute.createScenes = function createScenes({ engine, audio, data }) {
     wishHint.style.setProperty("--delay", "0.7s");
 
     const msgCard = el("div", "full-birthday-message");
-    msgCard.innerHTML = `<p class="birthday-card-text">${d.cardText}</p>`;
+    msgCard.appendChild(el("p", "birthday-card-text", d.cardText));
 
     const nextBtn = button(d.cta, "action-tap");
     nextBtn.style.setProperty("--delay", "0.95s");
@@ -749,12 +759,10 @@ window.Tribute.createScenes = function createScenes({ engine, audio, data }) {
       card.classList.remove("turn-in");
       void card.offsetWidth;
       card.classList.add("turn-in");
-      card.innerHTML = `
-        <div class="book-kicker">${p.kicker}</div>
-        <div class="book-icon" aria-hidden="true">${p.icon}</div>
-        <h2 class="book-title">${p.title}</h2>
-        <p class="book-body">${p.body}</p>
-      `;
+      const kicker = el("div", "book-kicker", p.kicker);
+      const icon = el("div", "book-icon", p.icon);
+      icon.setAttribute("aria-hidden", "true");
+      card.replaceChildren(kicker, icon, el("h2", "book-title", p.title), el("p", "book-body", p.body));
       counter.textContent = `Page ${pIdx + 1} of ${d.pages.length}`;
       prevBtn.style.opacity = pIdx === 0 ? "0.35" : "1";
       nextBtn.style.opacity = pIdx === d.pages.length - 1 ? "0.35" : "1";

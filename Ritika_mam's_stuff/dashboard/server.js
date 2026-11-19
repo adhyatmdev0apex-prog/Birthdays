@@ -21,23 +21,25 @@ const STATIC_FILES = new Map([
 ]);
 const DEFAULT_CONFIG = {
   recipient: "Ritika Ma'am",
+  profession: "Teacher",
+  relationshipToRitika: "",
   occasionDate: "",
   headline: "A birthday tribute, shaped with gratitude.",
   openingLine: "Some people make every ordinary moment feel like it belongs in a story.",
   memorySource: "blended",
   portraitImage: "",
   memories: [
-    { image: "", title: "Lessons Filled With Light", caption: "The kind of classes where learning felt effortless and curiosity was always welcomed." },
-    { image: "", title: "Smiles Along the Way", caption: "Shared laughter, warm conversations, and the joy of being encouraged by a wonderful mentor." },
-    { image: "", title: "Moments of Pride", caption: "Every milestone reached felt brighter knowing you were cheering us on." },
-    { image: "", title: "Gratitude Held in Time", caption: "Snapshots of a chapter we will always look back on with deep respect and fondness." }
+    { image: "", title: "Light in Every Moment", caption: "A snapshot of the moments that make this story yours." },
+    { image: "", title: "Smiles Along the Way", caption: "Shared laughter and little moments that stay with us." },
+    { image: "", title: "Moments of Pride", caption: "A milestone made brighter by having you there." },
+    { image: "", title: "Gratitude Held in Time", caption: "A memory we will always look back on with warmth." }
   ],
   wishes: [
-    { text: "Wishing you a year filled with good health, peaceful mornings, and the same joy you bring into every classroom.", author: "With deepest gratitude" },
-    { text: "Thank you for never giving up on us, celebrating our small wins, and showing us what true dedication looks like.", author: "From your grateful students" },
-    { text: "May this new year bring you new adventures, well-deserved rest, and countless reasons to smile every day.", author: "With warmest regards" }
+    { text: "Wishing you a year filled with good health, peaceful mornings, and all the happiness you deserve.", author: "With deepest gratitude" },
+    { text: "Thank you for the kindness, encouragement, and joy you bring to the people around you.", author: "With love and appreciation" },
+    { text: "May this new year bring you new adventures, well-deserved rest, and countless reasons to smile every day.", author: "With warmest wishes" }
   ],
-  celebrationMessage: "Wishing you a truly wonderful birthday and a bright, fulfilling year ahead, Ritika Ma'am! May good health, peace, and happiness follow you wherever you go.",
+  celebrationMessage: "Wishing you a truly wonderful birthday and a bright, fulfilling year ahead! May good health, peace, and happiness follow you wherever you go.",
   finalMessage: "Thank you for being a guide we will always look up to. May this year bring you peace, joy, and bright new chapters.",
   finalClosing: "With deepest respect and warmest wishes, always."
 };
@@ -231,7 +233,8 @@ function validateConfig(value) {
     }))
   };
   const limits = {
-    recipient: 80, occasionDate: 10, headline: 140, openingLine: 320,
+    recipient: 80, profession: 80, relationshipToRitika: 100,
+    occasionDate: 10, headline: 140, openingLine: 320,
     celebrationMessage: 500, finalMessage: 500, finalClosing: 160
   };
   for (const [key, maxLength] of Object.entries(limits)) {
@@ -240,8 +243,8 @@ function validateConfig(value) {
     }
     result[key] = result[key].trim();
   }
-  if (!result.recipient || !result.headline || !result.openingLine) {
-    throw new GitHubError(400, "Recipient, headline, and opening thought are required.");
+  if (!result.recipient || !result.profession || !result.headline || !result.openingLine) {
+    throw new GitHubError(400, "Birthday person's name, profession or role, headline, and opening thought are required.");
   }
   const occasionTimestamp = result.occasionDate
     ? Date.parse(`${result.occasionDate}T00:00:00Z`)
@@ -493,6 +496,7 @@ async function handleApi(request, response, config) {
     const draft = validateConfig(incoming);
     if (githubConfigured(config)) {
       const commit = await writeGitHubConfig(config, draft);
+      fs.writeFileSync(CONFIG_FILE, `${JSON.stringify(draft, null, 2)}\n`, "utf8");
       sendJson(response, 200, {
         config: draft,
         source: "github",
