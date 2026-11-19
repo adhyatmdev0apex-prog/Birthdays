@@ -366,3 +366,89 @@ h1 em { color: var(--gold-light); font-weight: 400; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+.app-shell .brand small,
+.app-shell .workspace-label,
+.app-shell .sidebar-note strong,
+.app-shell .sidebar-note small,
+.app-shell .sidebar-footer,
+.app-shell .breadcrumb,
+.app-shell .save-state,
+.app-shell .button,
+.app-shell .eyebrow,
+.app-shell .date-stamp,
+.app-shell .stat-label,
+.app-shell .stat-card small,
+.app-shell .section-index,
+.app-shell .mini-tag,
+.app-shell .direction-card p,
+.app-shell .card-foot,
+.app-shell .image-count,
+.app-shell .blueprint-head,
+.app-shell .step-number,
+.app-shell .scene-step strong,
+.app-shell .scene-step small,
+.app-shell .blueprint-note,
+.app-shell .reference-label,
+.app-shell .reference-meta,
+.app-shell .reference-copy p,
+.app-shell .reference-tags span,
+.app-shell .reference-footnote,
+.app-shell .editor-heading p,
+.app-shell .editor-card label,
+.app-shell .optional,
+.app-shell .direction-box strong,
+.app-shell .direction-box span,
+.app-shell .form-footer > span,
+.app-shell .preview-eyebrow,
+.app-shell .preview-identity,
+.app-shell .preview-footer,
+.app-shell .upload-control label,
+.app-shell .upload-label,
+.app-shell .upload-status,
+.app-shell .memory-editor-card label:not(.upload-label),
+.app-shell .wish-editor-card label,
+.app-shell .final-message-block > label,
+.app-shell .wish-number,
+.app-shell .final-message-preview > span,
+.app-shell .github-lock,
+.app-shell .github-card-main .eyebrow,
+.app-shell .github-card-main p:last-child,
+.app-shell .github-status,
+.app-shell .github-actions .button,
+.app-shell .text-link,
+.app-shell .setup-notes > div > span,
+.app-shell .setup-notes p,
+.app-shell .setup-notes code,
+.app-shell .privacy-note,
+.app-shell .page-footer,
+.app-shell .toast {
+  font-size: 12px;
+}
+
+.app-shell .content-block-heading .optional {
+  font-size: 12px;
+}
+
+@media (max-width: 620px) {
+  .side-nav {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .app-shell .save-state {
+    font-size: 0;
+  }
+
+  .nav-link,
+  .nav-link.active {
+    width: auto;
+    flex: 0 0 auto;
+    padding: 3px 8px;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+}

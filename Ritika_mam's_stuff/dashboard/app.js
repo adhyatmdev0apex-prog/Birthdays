@@ -72,10 +72,10 @@ function showToast(message, isError) {
 }
 
 function updatePreview(config) {
-  document.querySelector("#preview-recipient").textContent = `For ${config.recipient}`;
+  document.querySelector("#preview-recipient").textContent = `For the esteemed ${config.recipient}`;
   document.querySelector("#preview-identity").textContent = [
     config.profession,
-    config.relationshipToRitika || "A birthday tribute for someone special"
+    config.relationshipToRitika || "A tribute for one most dear"
   ].filter(Boolean).join(" · ");
   document.querySelector("#preview-headline").textContent = config.headline;
   document.querySelector("#preview-opening").textContent = config.openingLine;
@@ -103,8 +103,8 @@ function populateForm(config) {
   const portraitPlaceholder = document.querySelector("#portrait-placeholder");
   updateImagePreview(portraitImage, currentConfig.portraitImage, portraitPlaceholder);
   document.querySelector("#portrait-status").textContent = currentConfig.portraitImage
-    ? "Saved portrait · choose another to replace"
-    : "No portrait selected";
+    ? "Portrait kept · choose another, shouldst thou wish to replace it"
+    : "No portrait chosen as yet";
 
   document.querySelectorAll(".memory-editor-card").forEach((card, index) => {
     const memory = currentConfig.memories[index];
@@ -114,8 +114,8 @@ function populateForm(config) {
     const placeholder = card.querySelector(".memory-preview span");
     updateImagePreview(image, memory.image, placeholder);
     card.querySelector(".upload-status").textContent = memory.image
-      ? "Saved photo · choose another to replace"
-      : "No photo selected";
+      ? "Photograph kept · choose another, shouldst thou wish to replace it"
+      : "No photograph chosen as yet";
   });
 
   document.querySelectorAll(".wish-editor-card").forEach((card, index) => {
@@ -157,11 +157,13 @@ function updateGitHubStatus(status) {
   dot.className = "status-dot";
   const label = document.createElement("span");
   label.textContent = status.configured
-    ? `Ready · ${status.repository} · GitHub App`
-    : status.setupError || "Not connected · drafts save locally";
+    ? `All is ready · ${status.repository} · GitHub App connected`
+    : status.setupError
+      ? `A setup matter requires thy attention: ${status.setupError}`
+      : "Not connected · drafts are kept upon this device";
   element.append(dot, label);
 
-  const saveLabel = status.configured ? "GitHub App draft" : "Local draft";
+  const saveLabel = status.configured ? "Draft kept in GitHub App" : "Draft kept upon this device";
   setSaveState(saveLabel, status.configured ? "github" : "local");
 }
 
@@ -172,7 +174,7 @@ async function loadDashboard() {
       fetch("/api/status")
     ]);
     if (!configResponse.ok || !statusResponse.ok) {
-      throw new Error("The dashboard could not load its settings.");
+      throw new Error("The dashboard could not retrieve its settings, alas.");
     }
 
     const configResult = await configResponse.json();
@@ -180,25 +182,25 @@ async function loadDashboard() {
     populateForm(configResult.config);
     updateGitHubStatus(status);
     formMessage.textContent = configResult.source === "github"
-      ? "Loaded from the connected GitHub repository."
-      : "Edits stay in this dashboard.";
+      ? "Thy settings have arrived from the connected GitHub repository."
+      : "Thy changes remain herein, within this dashboard.";
     contentFormMessage.textContent = configResult.source === "github"
-      ? "Photos and words loaded from the connected GitHub repository."
-      : "Photos and words are saved in the dashboard draft.";
+      ? "Thy photographs and words have arrived from the connected GitHub repository."
+      : "Thy photographs and words shall be kept in the dashboard draft.";
   } catch (error) {
     let localConfig = mergeConfig(DEFAULT_CONFIG);
     try {
       const saved = JSON.parse(localStorage.getItem("birthday-studio-config"));
       if (saved && typeof saved === "object") localConfig = mergeConfig(saved);
     } catch {
-      formMessage.textContent = "Local draft could not be read. Defaults are shown.";
+      formMessage.textContent = "The local draft could not be read; hence, the default settings are shown instead.";
     }
     populateForm(localConfig);
     document.querySelector("#github-status").dataset.mode = "error";
-    document.querySelector("#github-status").textContent = "Dashboard server unavailable. Changes can be saved locally in this browser.";
-    setSaveState("Browser preview", "error");
-    formMessage.textContent = error.message || "The dashboard server could not be reached.";
-    contentFormMessage.textContent = "Image uploads require the dashboard server to be running.";
+    document.querySelector("#github-status").textContent = "The dashboard server is unavailable; changes may yet be kept in this browser.";
+    setSaveState("Preview in this browser", "error");
+    formMessage.textContent = error.message ? `Alas, ${error.message}` : "The dashboard server could not be reached.";
+    contentFormMessage.textContent = "Image uploads require the dashboard server to be running, lest they fail.";
   }
 }
 
@@ -219,21 +221,21 @@ async function uploadPendingImages() {
     const status = document.querySelector(key === "portrait"
       ? "#portrait-status"
       : `#memory-status-${Number(key.slice(-1)) + 1}`);
-    status.textContent = "Uploading…";
+    status.textContent = "Uploading thy photograph…";
     const response = await fetch("/api/images", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ key, type: file.type, data: await fileToBase64(file) })
     });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.error || `Could not upload ${file.name}.`);
+    if (!response.ok) throw new Error(`Alas, the upload failed: ${result.error || `the image ${file.name} could not be uploaded.`}`);
 
     if (key === "portrait") {
       currentConfig.portraitImage = result.path;
     } else {
       currentConfig.memories[Number(key.slice(-1))].image = result.path;
     }
-    status.textContent = `Uploaded · ${file.name}`;
+    status.textContent = `Uploaded unto the dashboard · ${file.name}`;
     pendingImages.delete(key);
   }
 }
@@ -241,9 +243,11 @@ async function uploadPendingImages() {
 function saveDraft() {
   if (!form.reportValidity() || !contentForm.reportValidity()) return;
 
-  formMessage.textContent = "Saving your draft…";
-  contentFormMessage.textContent = pendingImages.size ? "Uploading photos and saving your draft…" : "Saving photos and messages…";
-  setSaveState("Saving…", "");
+  formMessage.textContent = "I shall save thy draft…";
+  contentFormMessage.textContent = pendingImages.size
+    ? "Uploading thy photographs and saving the draft…"
+    : "Saving thy photographs and messages…";
+  setSaveState("Saving thy draft…", "");
 
   uploadPendingImages()
     .then(() => {
@@ -256,19 +260,21 @@ function saveDraft() {
     })
     .then(async (response) => {
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "Your draft could not be saved.");
+      if (!response.ok) throw new Error(result.error || "Thy draft could not be saved.");
       currentConfig = mergeConfig(result.config);
       updateGitHubStatus({ configured: result.source === "github", repository: result.repository });
       formMessage.textContent = result.source === "github"
-        ? "Draft saved to GitHub. The tribute uses its name, profession, and relationship when the project is hosted."
-        : "Draft saved on this computer. The tribute reads the profile when served from this project folder.";
+        ? "Thy draft hath been saved to GitHub. The hosted tribute shall use its name, profession, and relationship."
+        : "Thy draft hath been saved upon this computer. The tribute reads this profile when served from the project folder.";
       contentFormMessage.textContent = result.source === "github"
-        ? "Photos and messages synced to the dashboard folder in GitHub."
-        : "Photos and messages saved in the dashboard folder.";
-      showToast(result.source === "github" ? "Photos and messages synced to GitHub." : "Photos and messages saved.", false);
+        ? "Thy photographs and messages have been sent unto the dashboard folder in GitHub."
+        : "Thy photographs and messages have been kept in the dashboard folder.";
+      showToast(result.source === "github"
+        ? "Thy photographs and messages are now synced to GitHub."
+        : "Thy photographs and messages have been saved.", false);
       window.clearTimeout(saveStateTimer);
       saveStateTimer = window.setTimeout(() => {
-        setSaveState(result.source === "github" ? "GitHub App draft" : "Local draft", result.source);
+        setSaveState(result.source === "github" ? "Draft kept in GitHub App" : "Draft kept upon this device", result.source);
       }, 2800);
     })
     .catch((error) => {
@@ -276,18 +282,18 @@ function saveDraft() {
       try {
         localStorage.setItem("birthday-studio-config", JSON.stringify(config));
       } catch {
-        formMessage.textContent = `Save failed: ${error.message}`;
-        contentFormMessage.textContent = "Your changes could not be saved. Check that the dashboard server is running.";
-        setSaveState("Save failed", "error");
-        showToast(`Could not save your draft: ${error.message}`, true);
+        formMessage.textContent = `Alas, the saving hath failed: ${error.message}`;
+        contentFormMessage.textContent = "Thy changes could not be saved. Pray ensure the dashboard server is running.";
+        setSaveState("Thy saving hath failed", "error");
+        showToast(`Thy draft could not be saved: ${error.message}`, true);
         return;
       }
-      formMessage.textContent = `Sync failed: ${error.message} Text is backed up in this browser.`;
+      formMessage.textContent = `Alas, the sync hath failed: ${error.message} Thy words are kept as a backup in this browser.`;
       contentFormMessage.textContent = pendingImages.size
-        ? "Some selected photos were not uploaded. Keep the dashboard server running and try again."
-        : "Text is backed up in this browser; uploaded photos remain in the dashboard folder.";
-      setSaveState("Browser backup", "error");
-      showToast(`Could not fully save the draft: ${error.message}`, true);
+        ? "Some chosen photographs were not uploaded. Pray keep the dashboard server running, then try once more."
+        : "Thy words are kept as a backup in this browser; uploaded photographs remain in the dashboard folder.";
+      setSaveState("Backup in this browser", "error");
+      showToast(`Alas, the draft could not be fully saved: ${error.message}`, true);
     });
 }
 
@@ -297,7 +303,7 @@ function handleImageChange(input) {
   if (!file) return;
   if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) {
     input.value = "";
-    showToast("Choose a JPG, PNG, or WebP image up to 5 MB.", true);
+    showToast("Pray choose a JPG, PNG, or WebP image no larger than 5 MB.", true);
     return;
   }
 
@@ -313,14 +319,14 @@ function handleImageChange(input) {
       previewUrl,
       document.querySelector("#portrait-placeholder")
     );
-    document.querySelector("#portrait-status").textContent = `Ready to upload · ${file.name}`;
+    document.querySelector("#portrait-status").textContent = `Ready to upload thy portrait · ${file.name}`;
   } else {
     const index = Number(key.slice(-1));
     const card = document.querySelector(`[data-memory-index="${index}"]`);
     updateImagePreview(card.querySelector(".memory-preview img"), previewUrl, card.querySelector(".memory-preview span"));
-    card.querySelector(".upload-status").textContent = `Ready to upload · ${file.name}`;
+    card.querySelector(".upload-status").textContent = `Ready to upload thy photograph · ${file.name}`;
   }
-  contentFormMessage.textContent = "New photos will upload when you save the draft.";
+  contentFormMessage.textContent = "New photographs shall be uploaded when thou savest the draft.";
 }
 
 form.addEventListener("submit", (event) => {
