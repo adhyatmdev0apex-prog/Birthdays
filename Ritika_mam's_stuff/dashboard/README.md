@@ -16,6 +16,19 @@ Open [http://127.0.0.1:4173](http://127.0.0.1:4173). The dashboard binds to
 localhost only. Without GitHub App credentials, drafts are saved in
 `studio-config.json` on this computer.
 
+## Deploy on Render
+
+Create a **Web Service** for the `Birthdays` repository, with the root directory
+set to `Ritika_mam's_stuff/dashboard` and the start command set to `npm start`.
+The server uses Render's `PORT` and binds to `0.0.0.0` on Render; locally it
+continues to bind only to `127.0.0.1`. A Static Site cannot run the dashboard
+API.
+
+After changing the start command or environment settings, save and deploy the
+service. If `/api/config` returns an empty or non-JSON response, check the
+Render deploy logs and confirm this Web Service is running the dashboard's
+`server.js`, rather than serving only static files.
+
 ## Add photos and messages
 
 In **Tribute details**, enter the birthday person's name and profession or role

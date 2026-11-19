@@ -71,6 +71,27 @@ function showToast(message, isError) {
   toastTimer = window.setTimeout(() => toast.classList.remove("visible"), 4200);
 }
 
+async function readJsonResponse(response, action) {
+  const body = await response.text();
+  let result;
+  try {
+    result = JSON.parse(body);
+  } catch {
+    const responseType = response.headers.get("content-type") || "unknown content type";
+    const detail = body.trim()
+      ? `a non-JSON response (${responseType})`
+      : "an empty response";
+    throw new Error(
+      `${action} returned ${detail} (HTTP ${response.status}). ` +
+      "Ensure Render runs this dashboard as a Web Service with dashboard/server.js as its start command, then check the service logs."
+    );
+  }
+  if (!response.ok) {
+    throw new Error(result.error || `${action} failed (HTTP ${response.status}).`);
+  }
+  return result;
+}
+
 function updatePreview(config) {
   document.querySelector("#preview-recipient").textContent = `For the esteemed ${config.recipient}`;
   document.querySelector("#preview-identity").textContent = [
@@ -173,12 +194,10 @@ async function loadDashboard() {
       fetch("/api/config"),
       fetch("/api/status")
     ]);
-    if (!configResponse.ok || !statusResponse.ok) {
-      throw new Error("The dashboard could not retrieve its settings, alas.");
-    }
-
-    const configResult = await configResponse.json();
-    const status = await statusResponse.json();
+    const [configResult, status] = await Promise.all([
+      readJsonResponse(configResponse, "Loading dashboard settings"),
+      readJsonResponse(statusResponse, "Checking the GitHub App connection")
+    ]);
     populateForm(configResult.config);
     updateGitHubStatus(status);
     formMessage.textContent = configResult.source === "github"
@@ -227,8 +246,7 @@ async function uploadPendingImages() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ key, type: file.type, data: await fileToBase64(file) })
     });
-    const result = await response.json();
-    if (!response.ok) throw new Error(`Alas, the upload failed: ${result.error || `the image ${file.name} could not be uploaded.`}`);
+    const result = await readJsonResponse(response, `Uploading ${file.name}`);
 
     if (key === "portrait") {
       currentConfig.portraitImage = result.path;
@@ -259,8 +277,7 @@ function saveDraft() {
       });
     })
     .then(async (response) => {
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "Thy draft could not be saved.");
+      const result = await readJsonResponse(response, "Saving thy draft");
       currentConfig = mergeConfig(result.config);
       updateGitHubStatus({ configured: result.source === "github", repository: result.repository });
       formMessage.textContent = result.source === "github"

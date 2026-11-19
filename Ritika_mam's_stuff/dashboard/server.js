@@ -583,6 +583,7 @@ const server = http.createServer(async (request, response) => {
   }
 });
 
-server.listen(port, "127.0.0.1", () => {
-  console.log(`Birthday Studio dashboard: http://127.0.0.1:${port}`);
+const host = process.env.RENDER === "true" ? "0.0.0.0" : "127.0.0.1";
+server.listen(port, host, () => {
+  console.log(`Birthday Studio dashboard listening on ${host}:${port}`);
 });
