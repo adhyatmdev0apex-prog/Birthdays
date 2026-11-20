@@ -69,6 +69,7 @@ app.use('/api', proxyDashboard);
 app.use('/uploads', proxyDashboard);
 app.use('/references', proxyDashboard);
 app.get('/GITHUB_APP_SETUP.md', proxyDashboard);
+app.use('/ritika/dashboard', express.static(dashboardRoot));
 
 for (const [route, directory] of sites) {
   app.use(route, express.static(directory));
