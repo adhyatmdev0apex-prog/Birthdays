@@ -2,11 +2,15 @@
   "name": "birthdays",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "Chutu_X_mutt_chachus-bday"
-  ],
   "scripts": {
-    "build": "npm run build --workspace=./Chutu_X_mutt_chachus-bday",
-    "start": "npm run preview --workspace=./Chutu_X_mutt_chachus-bday -- --host 0.0.0.0 --port $PORT"
+    "build": "vite build ./Chutu_X_mutt_chachus-bday --config ./Chutu_X_mutt_chachus-bday/vite.config.js",
+    "start": "vite preview ./Chutu_X_mutt_chachus-bday --host 0.0.0.0 --port $PORT"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "gsap": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest"
   }
 }
