@@ -5,5 +5,45 @@
   "occasionDate": "",
   "headline": "A birthday tribute, shaped with gratitude.",
   "openingLine": "Some people make every ordinary moment feel like it belongs in a story.",
-  "memorySource": "blended"
+  "memorySource": "blended",
+  "portraitImage": "",
+  "memories": [
+    {
+      "image": "",
+      "title": "Light in Every Moment",
+      "caption": "A snapshot of the moments that make this story yours."
+    },
+    {
+      "image": "",
+      "title": "Smiles Along the Way",
+      "caption": "Shared laughter and little moments that stay with us."
+    },
+    {
+      "image": "",
+      "title": "Moments of Pride",
+      "caption": "A milestone made brighter by having you there."
+    },
+    {
+      "image": "",
+      "title": "Gratitude Held in Time",
+      "caption": "A memory we will always look back on with warmth."
+    }
+  ],
+  "wishes": [
+    {
+      "text": "Wishing you a year filled with good health, peaceful mornings, and all the happiness you deserve.",
+      "author": "With deepest gratitude"
+    },
+    {
+      "text": "Thank you for the kindness, encouragement, and joy you bring to the people around you.",
+      "author": "With love and appreciation"
+    },
+    {
+      "text": "May this new year bring you new adventures, well-deserved rest, and countless reasons to smile every day.",
+      "author": "With warmest wishes"
+    }
+  ],
+  "celebrationMessage": "Wishing you a truly wonderful birthday and a bright, fulfilling year ahead! May good health, peace, and happiness follow you wherever you go.",
+  "finalMessage": "Thank you for being a guide we will always look up to. May this year bring you peace, joy, and bright new chapters.",
+  "finalClosing": "With deepest respect and warmest wishes, always."
 }
