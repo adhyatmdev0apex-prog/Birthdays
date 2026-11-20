@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "vite build ./Chutu_X_mutt_chachus-bday --config ./Chutu_X_mutt_chachus-bday/vite.config.js",
-    "start": "vite preview ./Chutu_X_mutt_chachus-bday --host 0.0.0.0 --port $PORT"
+    "build": "vite build ./Chutu_X_mutt_chachus-bday --config ./Chutu_X_mutt_chachus-bday/vite.config.js && vite build \"./Mama-b;day\" --config \"./Mama-b;day/vite.config.js\"",
+    "start": "node server.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
+    "express": "^5.1.0",
     "gsap": "latest",
     "react": "latest",
     "react-dom": "latest",
