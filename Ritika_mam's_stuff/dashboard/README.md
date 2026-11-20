@@ -18,16 +18,15 @@ localhost only. Without GitHub App credentials, drafts are saved in
 
 ## Deploy on Render
 
-Create a **Web Service** for the `Birthdays` repository, with the root directory
-set to `Ritika_mam's_stuff/dashboard` and the start command set to `npm start`.
-The server uses Render's `PORT` and binds to `0.0.0.0` on Render; locally it
-continues to bind only to `127.0.0.1`. A Static Site cannot run the dashboard
-API.
+The `Birthdays` repository's existing Web Service may keep its root directory
+and `npm start` command. Its root `server.js` serves the dashboard page at
+`/ritika/dashboard/` and, on Render, starts this dashboard's API server on a
+private local port and forwards the API requests to it. Open the dashboard at
+`https://<your-render-domain>/ritika/dashboard/`; `/api/status` on the same
+domain should return JSON.
 
-After changing the start command or environment settings, save and deploy the
-service. If `/api/config` returns an empty or non-JSON response, check the
-Render deploy logs and confirm this Web Service is running the dashboard's
-`server.js`, rather than serving only static files.
+The GitHub App environment variables and Render Secret File must be configured
+on this same Web Service. A Static Site cannot run the dashboard API.
 
 ## Add photos and messages
 
