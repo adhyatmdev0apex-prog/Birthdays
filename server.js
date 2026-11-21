@@ -58,6 +58,7 @@ const sites = [
   ['/mama', path.join(root, "Mama-b;day", 'dist')],
   ['/bro', path.join(root, 'my-bros-birthday-main')],
   ['/ritika', path.join(root, "Ritika_mam's_stuff")],
+  ['/sri', path.join(root, 'Sri_bday')],
   ['/papa', path.join(root, "papa's_b'day", 'data')]
 ];
 

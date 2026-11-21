@@ -1,0 +1,347 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#040711">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="A cinematic birthday surprise dedicated to Sri.">
+  <link rel="icon" href="assets/icons/favicon.ico">
+  <title>Happy Birthday, Sri</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Zero-dependency inline styles for instant frame-1 Entry Gate & Preloader -->
+  <style id="instant-shell-css">
+    body { margin: 0; background: #040711; color: #f6f0e4; overflow: hidden; }
+    #app { visibility: hidden; opacity: 0; transition: opacity 0.7s ease; }
+
+    #entry-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10002;
+      background: radial-gradient(circle at 50% 42%, #0e1a32 0%, #040711 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: max(24px, env(safe-area-inset-top)) 24px max(28px, env(safe-area-inset-bottom)) 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: opacity 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.75s ease;
+    }
+
+    #entry-screen.fade-out {
+      opacity: 0;
+      transform: scale(1.04);
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .entry-ambient-glow {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(216, 179, 106, 0.22) 0%, rgba(26, 42, 74, 0.45) 52%, transparent 75%);
+      filter: blur(48px);
+      pointer-events: none;
+      animation: shellPulse 3.6s ease-in-out infinite alternate;
+    }
+
+    .entry-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 440px;
+      width: 100%;
+    }
+
+    .entry-symbol {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      color: #f3dfaa;
+      font-size: 16px;
+      text-shadow: 0 0 16px rgba(216, 179, 106, 0.8);
+    }
+
+    .entry-sparkle-center {
+      font-size: 24px;
+      animation: shellOrbGlow 2s ease-in-out infinite alternate;
+    }
+
+    .entry-eyebrow {
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: #d8b36a;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .entry-title {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(30px, 8vw, 46px);
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      color: #f6f0e4;
+      line-height: 1.2;
+      margin: 0 0 12px 0;
+      text-shadow: 0 4px 22px rgba(0, 0, 0, 0.7);
+    }
+
+    .entry-audio-note {
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: 13.5px;
+      color: #a4acb9;
+      margin: 0 0 28px 0;
+    }
+
+    .enter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, rgba(216, 179, 106, 0.24) 0%, rgba(216, 179, 106, 0.08) 100%);
+      border: 1px solid rgba(216, 179, 106, 0.65);
+      color: #f3dfaa;
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 26px rgba(216, 179, 106, 0.22);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .enter-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      border-color: #f3dfaa;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.6), 0 0 34px rgba(216, 179, 106, 0.4);
+    }
+
+    /* Preloader */
+    #experience-preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #040711;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: opacity 0.68s ease, transform 0.68s ease, filter 0.68s ease;
+    }
+
+    #experience-preloader.fade-out {
+      opacity: 0;
+      transform: scale(1.04);
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .exp-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      max-width: 330px;
+    }
+
+    .exp-celestial-orb {
+      position: relative;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .orb-ring-outer {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(216, 179, 106, 0.4);
+      animation: shellSpin 12s linear infinite;
+    }
+
+    .orb-ring-inner {
+      position: absolute;
+      inset: 7px;
+      border-radius: 50%;
+      border: 1px solid rgba(243, 223, 170, 0.55);
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      animation: shellSpinRev 5s linear infinite;
+    }
+
+    .orb-core { font-size: 22px; color: #f3dfaa; }
+
+    .exp-eyebrow {
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      color: #d8b36a;
+      margin-bottom: 8px;
+    }
+
+    .exp-title {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: #f6f0e4;
+      margin: 0 0 20px 0;
+    }
+
+    .exp-progress-container {
+      width: 100%;
+      height: 3.5px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .exp-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #d8b36a, #f3dfaa);
+      transition: width 0.2s ease;
+    }
+
+    .exp-status-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 11px;
+      color: #a4acb9;
+    }
+
+    .exp-status-pct { color: #d8b36a; font-weight: 600; }
+
+    @keyframes shellPulse { 0% { transform: scale(0.92); opacity: 0.55; } 100% { transform: scale(1.16); opacity: 0.95; } }
+    @keyframes shellOrbGlow { 0% { transform: scale(0.92); opacity: 0.8; } 100% { transform: scale(1.12); opacity: 1; } }
+    @keyframes shellSpin { to { transform: rotate(360deg); } }
+    @keyframes shellSpinRev { to { transform: rotate(-360deg); } }
+  </style>
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/atmosphere.css">
+  <link rel="stylesheet" href="css/scenes.css">
+  <link rel="stylesheet" href="css/memories.css">
+  <link rel="stylesheet" href="css/celebration.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Entry Gate (Unlocks audio cleanly on first gesture) -->
+  <div id="entry-screen" role="dialog" aria-modal="true" aria-label="Enter Birthday Tribute">
+    <div class="entry-ambient-glow" aria-hidden="true"></div>
+    <div class="entry-content">
+      <div class="entry-symbol" aria-hidden="true">
+        <span>✦</span>
+        <span class="entry-sparkle-center">✨</span>
+        <span>✦</span>
+      </div>
+      <div class="entry-eyebrow">21 NOVEMBER • A BIRTHDAY SURPRISE</div>
+      <h1 class="entry-title">For Sri</h1>
+      <p class="entry-audio-note">Best experienced with sound 🎧</p>
+      <button id="enter-btn" class="enter-btn" type="button">
+        <span>Open Your Surprise</span>
+        <span>→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Instant Experience Preloader -->
+  <div id="experience-preloader" role="status" aria-live="polite">
+    <div class="exp-content">
+      <div class="exp-celestial-orb" aria-hidden="true">
+        <div class="orb-ring-outer"></div>
+        <div class="orb-ring-inner"></div>
+        <div class="orb-core">✦</div>
+      </div>
+      <div class="exp-eyebrow">PREPARING THE TRIBUTE</div>
+      <h1 class="exp-title">Weaving gratitude together…</h1>
+      <div class="exp-progress-container">
+        <div id="exp-progress-bar" class="exp-progress-bar"></div>
+      </div>
+      <div class="exp-status-row">
+        <span id="exp-status-text">Gathering gratitude &amp; melodies…</span>
+        <span id="exp-status-pct" class="exp-status-pct">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persistent Atmospheric Layers -->
+  <div id="sky-gradient" aria-hidden="true"></div>
+  <div class="ambient-haze" aria-hidden="true"></div>
+  <div id="stars" class="stars" aria-hidden="true"></div>
+  <div id="cloud-layer" aria-hidden="true"></div>
+  <div id="moon-layer" aria-hidden="true">
+    <svg class="moon-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="moonGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f8e6b4"/>
+          <stop offset="100%" stop-color="#d8a852"/>
+        </linearGradient>
+      </defs>
+      <path d="M 52 14 A 42 42 0 1 0 83 56 A 32.5 32.5 0 1 1 50 14 Z" fill="url(#moonGrad)"/>
+    </svg>
+  </div>
+  <div id="particles" class="particles-container" aria-hidden="true"></div>
+  <div id="shooting-stars-layer" aria-hidden="true"></div>
+  <div id="confetti-layer" aria-hidden="true"></div>
+  <div id="fireworks-layer" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Minimal HUD: Progress Bar, Back/Chapter Pill & Sound Toggle -->
+  <div class="scene-progress-track" aria-hidden="true">
+    <div id="scene-progress-fill" class="scene-progress-fill"></div>
+  </div>
+
+  <div id="hud-top-left" class="hud-top-left">
+    <button id="hud-back-btn" class="hud-back-btn hidden-btn" type="button" aria-label="Previous chapter" title="Previous chapter">←</button>
+    <span id="hud-chapter-pill" class="hud-chapter-pill">01 / 09</span>
+  </div>
+
+  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Toggle Sound" title="Toggle Sound">
+    <span id="audio-icon">♪</span>
+  </button>
+
+  <!-- Scene Mount Root -->
+  <div id="app" aria-live="polite"></div>
+
+  <!-- Local Audio Assets (with Web Audio API synthesizer fallback in js/audio.js) -->
+  <audio id="piano" preload="auto">
+    <source src="assets/audio/piano.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="birthdaySong" preload="auto">
+    <source src="assets/audio/birthday.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Modular Scripts (works directly via file:// or any static web server) -->
+  <script src="data/teacher.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/interaction.js"></script>
+  <script src="js/preloader.js"></script>
+  <script src="js/scenes.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
