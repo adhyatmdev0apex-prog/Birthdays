@@ -33,14 +33,14 @@ window.TRIBUTE_CONFIG_READY = fetch("dashboard/studio-config.json", { cache: "no
     data.teacherName = recipient;
     data.subtitleRole = profession;
     data.intro.line2 = `Today,<br>one extraordinary ${escapeHtml(professionInSentence)}<br>has a birthday.`;
-    const connection = relationship
-      ? `Ritika Ma'am's ${relationship}`
-      : `someone special to Ritika Ma'am`;
-    data.intro.subtitle = `${openingLine} Celebrating ${recipient}, ${connection}.`;
+    const personalAddress = relationship
+      ? `my dearest ${relationship}, ${recipient}`
+      : `my dearest ${professionInSentence}, ${recipient}`;
+    data.intro.subtitle = `${openingLine} Today, I celebrate you, ${personalAddress}.`;
     data.portrait.captionTitle = recipient;
     data.portrait.subtitle = relationship
-      ? `${profession} · Ritika Ma'am's ${relationship}`
-      : `${profession} · Someone special to Ritika Ma'am`;
+      ? `My dearest ${relationship}, ${recipient}`
+      : `My dearest ${professionInSentence}, ${recipient}`;
     data.portrait.title = typeof config.headline === "string" && config.headline.trim()
       ? config.headline.trim()
       : data.portrait.title;
